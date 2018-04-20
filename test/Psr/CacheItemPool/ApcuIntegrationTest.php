@@ -1,19 +1,22 @@
 <?php
 /**
  * @see       https://github.com/zendframework/zend-cache for the canonical source repository
- * @copyright Copyright (c) 2018 Zend Technologies USA Inc. (https://www.zend.com)
+ * @copyright Copyright (c) 2018 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   https://github.com/zendframework/zend-cache/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Cache\Psr\SimpleCache;
+namespace ZendTest\Cache\Psr\CacheItemPool;
 
-use Cache\IntegrationTests\SimpleCacheTest;
-use Zend\Cache\Exception\ExtensionNotLoadedException;
-use Zend\Cache\Psr\SimpleCache\SimpleCacheDecorator;
+use Cache\IntegrationTests\CachePoolTest;
+use Zend\Cache\Psr\CacheItemPool\CacheItemPoolAdapter;
 use Zend\Cache\StorageFactory;
+use Zend\Cache\Exception;
 use Zend\ServiceManager\Exception\ServiceNotCreatedException;
 
-class ApcuIntegrationTest extends SimpleCacheTest
+/**
+ * @requires extension apcu
+ */
+class ApcuIntegrationTest extends CachePoolTest
 {
     /**
      * Backup default timezone
@@ -59,15 +62,31 @@ class ApcuIntegrationTest extends SimpleCacheTest
         parent::tearDown();
     }
 
-    public function createSimpleCache()
+    /**
+     * @expectedException \Zend\Cache\Psr\CacheItemPool\CacheException
+     */
+    public function testApcUseRequestTimeThrowsException()
+    {
+        ini_set('apc.use_request_time', 1);
+        $this->createCachePool();
+    }
+
+    public function createCachePool()
     {
         try {
             $storage = StorageFactory::adapterFactory('apcu');
-            return new SimpleCacheDecorator($storage);
-        } catch (ExtensionNotLoadedException $e) {
+
+            $deferredSkippedMessage = sprintf(
+                '%s storage doesn\'t support driver deferred',
+                \get_class($storage)
+            );
+            $this->skippedTests['testHasItemReturnsFalseWhenDeferredItemIsExpired'] = $deferredSkippedMessage;
+
+            return new CacheItemPoolAdapter($storage);
+        } catch (Exception\ExtensionNotLoadedException $e) {
             $this->markTestSkipped($e->getMessage());
         } catch (ServiceNotCreatedException $e) {
-            if ($e->getPrevious() instanceof ExtensionNotLoadedException) {
+            if ($e->getPrevious() instanceof Exception\ExtensionNotLoadedException) {
                 $this->markTestSkipped($e->getMessage());
             }
             throw $e;
