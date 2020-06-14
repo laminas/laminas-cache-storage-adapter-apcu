@@ -43,6 +43,9 @@
         "test": "phpunit --colors=always",
         "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
     },
+    "suggest": {
+        "ext-apcu": "APCU >= 5.1.0, to use the APCu storage adapter"
+    },
     "support": {
         "issues": "https://github.com/laminas/laminas-cache-storage-adapter-apcu/issues",
         "forum": "https://discourse.laminas.dev/",
