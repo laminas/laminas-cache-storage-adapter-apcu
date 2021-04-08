@@ -31,10 +31,6 @@ class ApcuIntegrationTest extends SimpleCacheTest
 
     protected function setUp()
     {
-        if (! getenv('TESTS_LAMINAS_CACHE_APCU_ENABLED')) {
-            $this->markTestSkipped('Enable TESTS_LAMINAS_CACHE_APCU_ENABLED to run this test');
-        }
-
         // set non-UTC timezone
         $this->tz = date_default_timezone_get();
         date_default_timezone_set('America/Vancouver');

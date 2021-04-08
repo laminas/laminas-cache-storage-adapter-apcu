@@ -1,7 +1,6 @@
 # laminas-cache-storage-adapter-apcu
 
-[![Build Status](https://travis-ci.com/laminas/laminas-cache-storage-adapter-apcu.svg?branch=master)](https://travis-ci.com/laminas/laminas-cache-storage-adapter-apcu)
-[![Coverage Status](https://coveralls.io/repos/github/laminas/laminas-cache-storage-adapter-apcu/badge.svg?branch=master)](https://coveralls.io/github/laminas/laminas-cache-storage-adapter-apcu?branch=master)
+[![Build Status](https://github.com/laminas/laminas-cache-storage-adapter-apcu/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/laminas/laminas-cache-storage-adapter-apcu/actions/workflows/continuous-integration.yml)
 
 This library provides …
 
