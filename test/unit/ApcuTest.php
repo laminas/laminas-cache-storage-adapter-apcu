@@ -25,10 +25,6 @@ class ApcuTest extends CommonAdapterTest
 
     public function setUp()
     {
-        if (! getenv('TESTS_LAMINAS_CACHE_APCU_ENABLED')) {
-            $this->markTestSkipped('Enable TESTS_LAMINAS_CACHE_APCU_ENABLED to run this test');
-        }
-
         $enabled = extension_loaded('apcu') && version_compare(phpversion('apcu'), '5.1.0', '>=');
         $enabled = $enabled && ini_get('apc.enabled') && (PHP_SAPI !== 'cli' || ini_get('apc.enable_cli'));
 
