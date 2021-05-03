@@ -14,7 +14,7 @@ use Laminas\Cache;
  * @group      Laminas_Cache
  * @covers Laminas\Cache\Storage\Adapter\Apcu<extended>
  */
-class ApcuTest extends CommonAdapterTest
+class ApcuTest extends AbstractCommonAdapterTest
 {
     /**
      * Restore 'apc.use_request_time'
@@ -23,7 +23,7 @@ class ApcuTest extends CommonAdapterTest
      */
     protected $iniUseRequestTime;
 
-    public function setUp()
+    public function setUp(): void
     {
         $enabled = extension_loaded('apcu') && version_compare(phpversion('apcu'), '5.1.0', '>=');
         $enabled = $enabled && ini_get('apc.enabled') && (PHP_SAPI !== 'cli' || ini_get('apc.enable_cli'));
@@ -38,9 +38,9 @@ class ApcuTest extends CommonAdapterTest
             $this->iniUseRequestTime = ini_get('apc.use_request_time');
             ini_set('apc.use_request_time', 0);
 
-            $this->_options = new Cache\Storage\Adapter\ApcuOptions();
-            $this->_storage = $apcu;
-            $this->_storage->setOptions($this->_options);
+            $this->options = new Cache\Storage\Adapter\ApcuOptions();
+            $this->storage = $apcu;
+            $this->storage->setOptions($this->options);
         } catch (Cache\Exception\ExtensionNotLoadedException $e) {
             if ($enabled) {
                 $this->fail('ext/apcu enabled but an ExtensionNotLoadedException was thrown: ' . $e->getMessage());
@@ -52,7 +52,7 @@ class ApcuTest extends CommonAdapterTest
         parent::setUp();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         if (function_exists('apcu_clear_cache')) {
             apcu_clear_cache();
