@@ -10,6 +10,7 @@ namespace LaminasTest\Cache\Psr\CacheItemPool;
 
 use Cache\IntegrationTests\CachePoolTest;
 use Laminas\Cache\Exception;
+use Laminas\Cache\Psr\CacheItemPool\CacheException;
 use Laminas\Cache\Psr\CacheItemPool\CacheItemPoolDecorator;
 use Laminas\Cache\StorageFactory;
 use Laminas\ServiceManager\Exception\ServiceNotCreatedException;
@@ -32,7 +33,7 @@ class ApcuIntegrationTest extends CachePoolTest
      */
     protected $iniUseRequestTime;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         // set non-UTC timezone
         $this->tz = date_default_timezone_get();
@@ -45,7 +46,7 @@ class ApcuIntegrationTest extends CachePoolTest
         parent::setUp();
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         date_default_timezone_set($this->tz);
 
@@ -59,12 +60,10 @@ class ApcuIntegrationTest extends CachePoolTest
         parent::tearDown();
     }
 
-    /**
-     * @expectedException \Laminas\Cache\Psr\CacheItemPool\CacheException
-     */
     public function testApcUseRequestTimeThrowsException()
     {
         ini_set('apc.use_request_time', 1);
+        $this->expectException(CacheException::class);
         $this->createCachePool();
     }
 

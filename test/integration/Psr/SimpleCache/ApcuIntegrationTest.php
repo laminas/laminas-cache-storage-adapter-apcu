@@ -29,7 +29,7 @@ class ApcuIntegrationTest extends SimpleCacheTest
      */
     protected $iniUseRequestTime;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         // set non-UTC timezone
         $this->tz = date_default_timezone_get();
@@ -39,10 +39,12 @@ class ApcuIntegrationTest extends SimpleCacheTest
         $this->iniUseRequestTime = ini_get('apc.use_request_time');
         ini_set('apc.use_request_time', 0);
 
+        $this->skippedTests['testBasicUsageWithLongKey'] = 'SimpleCacheDecorator requires keys to be <= 64 chars';
+
         parent::setUp();
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         date_default_timezone_set($this->tz);
 
