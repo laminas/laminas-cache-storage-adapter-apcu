@@ -24,7 +24,12 @@
   "config": {
     "sort-packages": true
   },
-  "extra": {},
+  "extra": {
+    "laminas": {
+      "config-provider": "Laminas\\Cache\\Storage\\Adapter\\Apcu\\ConfigProvider",
+      "module": "Laminas\\Cache\\Storage\\Adapter\\Apcu"
+    }
+  },
   "autoload": {
     "psr-4": {
       "Laminas\\Cache\\Storage\\Adapter\\": "src/"

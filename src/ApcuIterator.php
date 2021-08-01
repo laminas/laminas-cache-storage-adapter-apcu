@@ -93,17 +93,17 @@ class ApcuIterator implements IteratorInterface
      */
     public function current()
     {
-        if ($this->mode == IteratorInterface::CURRENT_AS_SELF) {
+        if ($this->mode === IteratorInterface::CURRENT_AS_SELF) {
             return $this;
         }
 
         $key = $this->key();
 
-        if ($this->mode == IteratorInterface::CURRENT_AS_VALUE) {
+        if ($this->mode === IteratorInterface::CURRENT_AS_VALUE) {
             return $this->storage->getItem($key);
         }
 
-        if ($this->mode == IteratorInterface::CURRENT_AS_METADATA) {
+        if ($this->mode === IteratorInterface::CURRENT_AS_METADATA) {
             return $this->storage->getMetadata($key);
         }
 
@@ -150,6 +150,6 @@ class ApcuIterator implements IteratorInterface
      */
     public function rewind()
     {
-        return $this->baseIterator->rewind();
+         $this->baseIterator->rewind();
     }
 }

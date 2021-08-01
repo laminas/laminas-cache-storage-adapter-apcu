@@ -376,11 +376,11 @@ class Apcu extends AbstractAdapter implements
         $prefixL   = 0;
 
         if ($namespace === '') {
-            $pattern = '/^(' . implode('|', $keysRegExp) . ')' . '$/';
+            $pattern = '/^(' . implode('|', $keysRegExp) . ')$/';
         } else {
             $prefix  = $namespace . $options->getNamespaceSeparator();
             $prefixL = strlen($prefix);
-            $pattern = '/^' . preg_quote($prefix, '/') . '(' . implode('|', $keysRegExp) . ')' . '$/';
+            $pattern = '/^' . preg_quote($prefix, '/') . '(' . implode('|', $keysRegExp) . ')$/';
         }
 
         $format = APC_ITER_ALL ^ APC_ITER_VALUE ^ APC_ITER_TYPE ^ APC_ITER_REFCOUNT;
