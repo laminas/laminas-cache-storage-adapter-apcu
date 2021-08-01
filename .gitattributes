@@ -9,3 +9,5 @@
 /test/ export-ignore
 /.laminas-ci.json export-ignore
 /.laminas-ci/ export-ignore
+/psalm.xml.dist export-ignore
+/psalm-baseline.xml export-ignore

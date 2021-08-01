@@ -1,9 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Cache\Storage\Adapter;
 
-use APCuIterator as BaseApcuIterator;
+use APCUIterator as BaseApcuIterator;
 use Laminas\Cache\Storage\IteratorInterface;
+
+use function strlen;
+use function substr;
 
 class ApcuIterator implements IteratorInterface
 {
@@ -24,7 +29,7 @@ class ApcuIterator implements IteratorInterface
     /**
      * The base APCIterator instance
      *
-     * @var APCIterator
+     * @var BaseApcuIterator
      */
     protected $baseIterator;
 
@@ -38,8 +43,6 @@ class ApcuIterator implements IteratorInterface
     /**
      * Constructor
      *
-     * @param Apcu             $storage
-     * @param BaseApcuIterator $baseIterator
      * @param string           $prefix
      */
     public function __construct(Apcu $storage, BaseApcuIterator $baseIterator, $prefix)
@@ -98,7 +101,9 @@ class ApcuIterator implements IteratorInterface
 
         if ($this->mode == IteratorInterface::CURRENT_AS_VALUE) {
             return $this->storage->getItem($key);
-        } elseif ($this->mode == IteratorInterface::CURRENT_AS_METADATA) {
+        }
+
+        if ($this->mode == IteratorInterface::CURRENT_AS_METADATA) {
             return $this->storage->getMetadata($key);
         }
 
