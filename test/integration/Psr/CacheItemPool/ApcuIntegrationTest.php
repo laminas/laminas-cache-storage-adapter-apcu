@@ -1,52 +1,46 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Cache\Psr\CacheItemPool;
 
-use Cache\IntegrationTests\CachePoolTest;
-use Laminas\Cache\Exception;
 use Laminas\Cache\Psr\CacheItemPool\CacheException;
-use Laminas\Cache\Psr\CacheItemPool\CacheItemPoolDecorator;
-use Laminas\Cache\StorageFactory;
-use Laminas\ServiceManager\Exception\ServiceNotCreatedException;
+use Laminas\Cache\Storage\Adapter\Apcu;
+use Laminas\Cache\Storage\StorageInterface;
+use LaminasTest\Cache\Storage\Adapter\AbstractCacheItemPoolIntegrationTest;
 
-/**
- * @requires extension apcu
- */
-class ApcuIntegrationTest extends CachePoolTest
+use function apcu_clear_cache;
+use function ini_get;
+use function ini_set;
+
+final class ApcuIntegrationTest extends AbstractCacheItemPoolIntegrationTest
 {
-    /**
-     * Backup default timezone
-     * @var string
-     */
-    private $tz;
-
     /**
      * Restore 'apc.use_request_time'
      *
-     * @var mixed
+     * @var string
      */
     protected $iniUseRequestTime;
 
+    public function testApcUseRequestTimeThrowsException(): void
+    {
+        ini_set('apc.use_request_time', '1');
+        $this->expectException(CacheException::class);
+        $this->createCachePool();
+    }
+
     protected function setUp(): void
     {
-        // set non-UTC timezone
-        $this->tz = date_default_timezone_get();
-        date_default_timezone_set('America/Vancouver');
-
         // needed on test expirations
         $this->iniUseRequestTime = ini_get('apc.use_request_time');
-        ini_set('apc.use_request_time', 0);
+        ini_set('apc.use_request_time', '0');
 
         parent::setUp();
     }
 
     protected function tearDown(): void
     {
-        date_default_timezone_set($this->tz);
-
-        if (function_exists('apc_clear_cache')) {
-            apc_clear_cache('user');
-        }
+        apcu_clear_cache();
 
         // reset ini configurations
         ini_set('apc.use_request_time', $this->iniUseRequestTime);
@@ -54,32 +48,8 @@ class ApcuIntegrationTest extends CachePoolTest
         parent::tearDown();
     }
 
-    public function testApcUseRequestTimeThrowsException()
+    protected function createStorage(): StorageInterface
     {
-        ini_set('apc.use_request_time', 1);
-        $this->expectException(CacheException::class);
-        $this->createCachePool();
-    }
-
-    public function createCachePool()
-    {
-        try {
-            $storage = StorageFactory::adapterFactory('apcu');
-
-            $deferredSkippedMessage = sprintf(
-                '%s storage doesn\'t support driver deferred',
-                \get_class($storage)
-            );
-            $this->skippedTests['testHasItemReturnsFalseWhenDeferredItemIsExpired'] = $deferredSkippedMessage;
-
-            return new CacheItemPoolDecorator($storage);
-        } catch (Exception\ExtensionNotLoadedException $e) {
-            $this->markTestSkipped($e->getMessage());
-        } catch (ServiceNotCreatedException $e) {
-            if ($e->getPrevious() instanceof Exception\ExtensionNotLoadedException) {
-                $this->markTestSkipped($e->getMessage());
-            }
-            throw $e;
-        }
+        return new Apcu();
     }
 }
