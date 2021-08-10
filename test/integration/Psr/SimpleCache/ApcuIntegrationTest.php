@@ -2,13 +2,12 @@
 
 declare(strict_types=1);
 
-namespace LaminasTest\Cache\Psr\SimpleCache;
+namespace LaminasTest\Cache\Storage\Adapter\Psr\SimpleCache;
 
 use Laminas\Cache\Storage\Adapter\Apcu;
 use Laminas\Cache\Storage\StorageInterface;
 use LaminasTest\Cache\Storage\Adapter\AbstractSimpleCacheIntegrationTest;
 
-use function apcu_clear_cache;
 use function ini_get;
 use function ini_set;
 
@@ -32,8 +31,6 @@ class ApcuIntegrationTest extends AbstractSimpleCacheIntegrationTest
 
     protected function tearDown(): void
     {
-        apcu_clear_cache();
-
         // reset ini configurations
         ini_set('apc.use_request_time', $this->iniUseRequestTime);
 
