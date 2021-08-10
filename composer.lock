@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e839bd85d5ad76840a4995c2646e60dd",
+    "content-hash": "f16c007e4790779a9699e811cfe7072d",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -48,12 +48,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-cache.git",
-                "reference": "16f8af713352a346e61388ce92b0be1a52d72506"
+                "reference": "976f17942ae223a9a7152e21abfed749c8cedee3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-cache/zipball/16f8af713352a346e61388ce92b0be1a52d72506",
-                "reference": "16f8af713352a346e61388ce92b0be1a52d72506",
+                "url": "https://api.github.com/repos/laminas/laminas-cache/zipball/976f17942ae223a9a7152e21abfed749c8cedee3",
+                "reference": "976f17942ae223a9a7152e21abfed749c8cedee3",
                 "shasum": ""
             },
             "require": {
@@ -139,7 +139,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2021-08-01T10:08:53+00:00"
+            "time": "2021-08-08T10:38:49+00:00"
         },
         {
             "name": "laminas/laminas-eventmanager",
@@ -298,24 +298,23 @@
         },
         {
             "name": "laminas/laminas-stdlib",
-            "version": "3.4.0",
+            "version": "3.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-stdlib.git",
-                "reference": "e89c2268c9cad25099f562f7f015c28c5dd383c9"
+                "reference": "c8ac6a76a133e682acfabc821d4a2ec646934b12"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-stdlib/zipball/e89c2268c9cad25099f562f7f015c28c5dd383c9",
-                "reference": "e89c2268c9cad25099f562f7f015c28c5dd383c9",
+                "url": "https://api.github.com/repos/laminas/laminas-stdlib/zipball/c8ac6a76a133e682acfabc821d4a2ec646934b12",
+                "reference": "c8ac6a76a133e682acfabc821d4a2ec646934b12",
                 "shasum": ""
             },
             "require": {
-                "laminas/laminas-zendframework-bridge": "^1.0",
                 "php": "^7.3 || ^8.0"
             },
-            "replace": {
-                "zendframework/zend-stdlib": "^3.2.1"
+            "conflict": {
+                "zendframework/zend-stdlib": "*"
             },
             "require-dev": {
                 "laminas/laminas-coding-standard": "~2.3.0",
@@ -354,7 +353,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2021-06-28T21:37:31+00:00"
+            "time": "2021-08-03T13:40:40+00:00"
         },
         {
             "name": "laminas/laminas-zendframework-bridge",
@@ -1497,16 +1496,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-cache-storage-adapter-test.git",
-                "reference": "db61b193a10d829202044629c42a6ccb5eca47f3"
+                "reference": "ae2f4d57a2974e770a625abc3f04a242a3dde22d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-cache-storage-adapter-test/zipball/db61b193a10d829202044629c42a6ccb5eca47f3",
-                "reference": "db61b193a10d829202044629c42a6ccb5eca47f3",
+                "url": "https://api.github.com/repos/laminas/laminas-cache-storage-adapter-test/zipball/ae2f4d57a2974e770a625abc3f04a242a3dde22d",
+                "reference": "ae2f4d57a2974e770a625abc3f04a242a3dde22d",
                 "shasum": ""
             },
             "require": {
                 "cache/integration-tests": "^0.17",
+                "container-interop/container-interop": "^1.2",
                 "laminas/laminas-cache": "^3.0",
                 "php": "^7.3 || ~8.0.0",
                 "phpunit/phpunit": "^9.5"
@@ -1549,7 +1549,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2021-08-01T19:47:19+00:00"
+            "time": "2021-08-10T18:55:31+00:00"
         },
         {
             "name": "laminas/laminas-coding-standard",
@@ -3591,7 +3591,6 @@
                     "type": "github"
                 }
             ],
-            "abandoned": true,
             "time": "2020-09-28T06:45:17+00:00"
         },
         {

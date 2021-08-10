@@ -15,8 +15,8 @@
     "laminas/laminas-cache-storage-implementation": "1.0"
   },
   "require-dev": {
-    "laminas/laminas-cache": "3.0.x-dev",
-    "laminas/laminas-cache-storage-adapter-test": "2.0.x-dev",
+    "laminas/laminas-cache": "3.0.x-dev || ^3.0",
+    "laminas/laminas-cache-storage-adapter-test": "2.0.x-dev || ^2.0",
     "laminas/laminas-coding-standard": "~2.3.0",
     "psalm/plugin-phpunit": "^0.16.1",
     "vimeo/psalm": "^4.9"
@@ -37,8 +37,10 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "LaminasTest\\Cache\\Storage\\Adapter\\": "test/unit",
-      "LaminasTest\\Cache\\Psr\\": "test/integration/Psr"
+      "LaminasTest\\Cache\\Storage\\Adapter\\": [
+        "test/unit",
+        "test/integration"
+      ]
     }
   },
   "scripts": {
