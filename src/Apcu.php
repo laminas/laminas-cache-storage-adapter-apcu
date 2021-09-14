@@ -46,7 +46,7 @@ use const APC_ITER_VALUE;
 use const APC_LIST_ACTIVE;
 use const PHP_SAPI;
 
-class Apcu extends AbstractAdapter implements
+final class Apcu extends AbstractAdapter implements
     AvailableSpaceCapableInterface,
     ClearByNamespaceInterface,
     ClearByPrefixInterface,
@@ -149,7 +149,7 @@ class Apcu extends AbstractAdapter implements
      *
      * @return ApcuIterator
      */
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         $options   = $this->getOptions();
         $namespace = $options->getNamespace();

@@ -1,24 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.9.2@00c062267d6e3229d91a1939992987e2d46f2393">
+<files psalm-version="4.10.0@916b098b008f6de4543892b1e0651c1c3b92cbfa">
   <file src="src/Apcu.php">
-    <InvalidArgument occurrences="5">
-      <code>$internalKey</code>
-      <code>$internalKey</code>
-      <code>$internalKey</code>
-      <code>$internalKey</code>
-      <code>$internalKey</code>
-    </InvalidArgument>
-    <InvalidScalarArgument occurrences="9">
-      <code>$options-&gt;getTtl()</code>
-      <code>$options-&gt;getTtl()</code>
-      <code>$options-&gt;getTtl()</code>
-      <code>$options-&gt;getTtl()</code>
-      <code>$ttl</code>
-      <code>$ttl</code>
-      <code>$ttl</code>
-      <code>$ttl</code>
-      <code>$ttl</code>
-    </InvalidScalarArgument>
     <LessSpecificReturnStatement occurrences="1">
       <code>parent::setOptions($options)</code>
     </LessSpecificReturnStatement>
@@ -101,85 +83,13 @@
     </UnusedVariable>
   </file>
   <file src="src/ApcuIterator.php">
-    <InvalidPropertyAssignmentValue occurrences="1">
-      <code>$baseIterator</code>
-    </InvalidPropertyAssignmentValue>
-    <InvalidReturnStatement occurrences="1">
-      <code>$this-&gt;baseIterator-&gt;rewind()</code>
-    </InvalidReturnStatement>
-    <MixedArgument occurrences="1">
-      <code>$key</code>
-    </MixedArgument>
-    <MixedAssignment occurrences="1">
-      <code>$key</code>
-    </MixedAssignment>
-    <MixedInferredReturnType occurrences="2">
-      <code>bool</code>
-      <code>void</code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="1">
-      <code>$this-&gt;baseIterator-&gt;valid()</code>
-    </MixedReturnStatement>
     <RedundantCastGivenDocblockType occurrences="1">
       <code>(int) $mode</code>
     </RedundantCastGivenDocblockType>
-    <UndefinedDocblockClass occurrences="5">
-      <code>$this-&gt;baseIterator</code>
-      <code>$this-&gt;baseIterator</code>
-      <code>$this-&gt;baseIterator</code>
-      <code>$this-&gt;baseIterator</code>
-      <code>APCIterator</code>
-    </UndefinedDocblockClass>
   </file>
   <file src="src/ApcuOptions.php">
     <RedundantCastGivenDocblockType occurrences="1">
       <code>(string) $namespaceSeparator</code>
     </RedundantCastGivenDocblockType>
-  </file>
-  <file src="test/integration/Psr/CacheItemPool/ApcuIntegrationTest.php">
-    <InvalidScalarArgument occurrences="2">
-      <code>0</code>
-      <code>1</code>
-    </InvalidScalarArgument>
-    <MissingReturnType occurrences="1">
-      <code>testApcUseRequestTimeThrowsException</code>
-    </MissingReturnType>
-    <MixedArgument occurrences="1">
-      <code>$this-&gt;iniUseRequestTime</code>
-    </MixedArgument>
-    <MixedInferredReturnType occurrences="1">
-      <code>createCachePool</code>
-    </MixedInferredReturnType>
-    <UndefinedClass occurrences="1">
-      <code>StorageFactory</code>
-    </UndefinedClass>
-  </file>
-  <file src="test/integration/Psr/SimpleCache/ApcuIntegrationTest.php">
-    <InvalidScalarArgument occurrences="1">
-      <code>0</code>
-    </InvalidScalarArgument>
-    <MixedArgument occurrences="1">
-      <code>$this-&gt;iniUseRequestTime</code>
-    </MixedArgument>
-    <MixedArrayAssignment occurrences="1">
-      <code>$this-&gt;skippedTests['testBasicUsageWithLongKey']</code>
-    </MixedArrayAssignment>
-    <MixedInferredReturnType occurrences="1">
-      <code>createSimpleCache</code>
-    </MixedInferredReturnType>
-    <UndefinedClass occurrences="1">
-      <code>StorageFactory</code>
-    </UndefinedClass>
-  </file>
-  <file src="test/unit/ApcuTest.php">
-    <InvalidScalarArgument occurrences="1">
-      <code>0</code>
-    </InvalidScalarArgument>
-    <MissingReturnType occurrences="1">
-      <code>getCommonAdapterNamesProvider</code>
-    </MissingReturnType>
-    <MixedArgument occurrences="1">
-      <code>$this-&gt;iniUseRequestTime</code>
-    </MixedArgument>
   </file>
 </files>
