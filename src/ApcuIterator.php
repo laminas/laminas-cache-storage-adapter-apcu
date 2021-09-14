@@ -69,7 +69,8 @@ final class ApcuIterator implements IteratorInterface
      * Set iterator mode
      *
      * @param int $mode
-     * @psalm-var IteratorInterface::CURRENT_AS_*
+     * @psalm-suppress MoreSpecificImplementedParamType
+     * @psalm-param IteratorInterface::CURRENT_AS_* $mode
      * @return ApcuIterator Provides a fluent interface
      */
     public function setMode($mode)
