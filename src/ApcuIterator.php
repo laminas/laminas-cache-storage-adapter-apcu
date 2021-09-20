@@ -6,58 +6,50 @@ namespace Laminas\Cache\Storage\Adapter;
 
 use APCUIterator as BaseApcuIterator;
 use Laminas\Cache\Storage\IteratorInterface;
+use ReturnTypeWillChange;
 
 use function strlen;
 use function substr;
 
-class ApcuIterator implements IteratorInterface
+final class ApcuIterator implements IteratorInterface
 {
     /**
      * The storage instance
      *
      * @var Apcu
      */
-    protected $storage;
+    private $storage;
 
     /**
      * The iterator mode
      *
      * @var int
+     * @psalm-var IteratorInterface::CURRENT_AS_*
      */
-    protected $mode = IteratorInterface::CURRENT_AS_KEY;
+    private $mode = IteratorInterface::CURRENT_AS_KEY;
 
     /**
      * The base APCIterator instance
      *
      * @var BaseApcuIterator
      */
-    protected $baseIterator;
+    private $baseIterator;
 
     /**
      * The length of the namespace prefix
      *
      * @var int
      */
-    protected $prefixLength;
+    private $prefixLength;
 
-    /**
-     * Constructor
-     *
-     * @param string           $prefix
-     */
-    public function __construct(Apcu $storage, BaseApcuIterator $baseIterator, $prefix)
+    public function __construct(Apcu $storage, BaseApcuIterator $baseIterator, string $prefix)
     {
         $this->storage      = $storage;
         $this->baseIterator = $baseIterator;
         $this->prefixLength = strlen($prefix);
     }
 
-    /**
-     * Get storage instance
-     *
-     * @return Apcu
-     */
-    public function getStorage()
+    public function getStorage(): Apcu
     {
         return $this->storage;
     }
@@ -66,8 +58,9 @@ class ApcuIterator implements IteratorInterface
      * Get iterator mode
      *
      * @return int Value of IteratorInterface::CURRENT_AS_*
+     * @psalm-return IteratorInterface::CURRENT_AS_*
      */
-    public function getMode()
+    public function getMode(): int
     {
         return $this->mode;
     }
@@ -76,6 +69,8 @@ class ApcuIterator implements IteratorInterface
      * Set iterator mode
      *
      * @param int $mode
+     * @psalm-suppress MoreSpecificImplementedParamType
+     * @psalm-param IteratorInterface::CURRENT_AS_* $mode
      * @return ApcuIterator Provides a fluent interface
      */
     public function setMode($mode)
@@ -91,6 +86,7 @@ class ApcuIterator implements IteratorInterface
      *
      * @return mixed
      */
+    #[ReturnTypeWillChange]
     public function current()
     {
         if ($this->mode === IteratorInterface::CURRENT_AS_SELF) {
@@ -110,12 +106,7 @@ class ApcuIterator implements IteratorInterface
         return $key;
     }
 
-    /**
-     * Get current key
-     *
-     * @return string
-     */
-    public function key()
+    public function key(): string
     {
         $key = $this->baseIterator->key();
 
@@ -125,30 +116,24 @@ class ApcuIterator implements IteratorInterface
 
     /**
      * Move forward to next element
-     *
-     * @return void
      */
-    public function next()
+    public function next(): void
     {
         $this->baseIterator->next();
     }
 
     /**
      * Checks if current position is valid
-     *
-     * @return bool
      */
-    public function valid()
+    public function valid(): bool
     {
         return $this->baseIterator->valid();
     }
 
     /**
      * Rewind the Iterator to the first element.
-     *
-     * @return void
      */
-    public function rewind()
+    public function rewind(): void
     {
          $this->baseIterator->rewind();
     }
