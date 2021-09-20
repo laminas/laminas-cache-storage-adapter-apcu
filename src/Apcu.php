@@ -342,9 +342,14 @@ final class Apcu extends AbstractAdapter implements
         $prefix      = $namespace === '' ? '' : $namespace . $options->getNamespaceSeparator();
         $internalKey = $prefix . $normalizedKey;
 
-        $format   = APC_ITER_ALL ^ APC_ITER_VALUE ^ APC_ITER_TYPE ^ APC_ITER_REFCOUNT;
-        $regexp   = '/^' . preg_quote($internalKey, '/') . '$/';
-        $it       = new BaseApcuIterator($regexp, $format, 100, APC_LIST_ACTIVE);
+        $format = APC_ITER_ALL ^ APC_ITER_VALUE ^ APC_ITER_TYPE ^ APC_ITER_REFCOUNT;
+        $regexp = '/^' . preg_quote($internalKey, '/') . '$/';
+        $it     = new BaseApcuIterator($regexp, $format, 100, APC_LIST_ACTIVE);
+
+        if (! $it->valid()) {
+            return false;
+        }
+
         $metadata = $it->current();
 
         if (! $metadata) {
