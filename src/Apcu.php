@@ -518,7 +518,7 @@ final class Apcu extends AbstractAdapter implements
 
         // remove prefix
         $prefixL = strlen($prefix);
-        foreach ($failedKeys as & $key) {
+        foreach ($failedKeys as &$key) {
             $key = substr($key, $prefixL);
         }
 
@@ -615,7 +615,7 @@ final class Apcu extends AbstractAdapter implements
 
         // remove prefix
         $prefixL = strlen($prefix);
-        foreach ($failedKeys as & $key) {
+        foreach ($failedKeys as &$key) {
             $key = substr($key, $prefixL);
         }
 
