@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Laminas\Cache\Storage\Adapter\Apcu;
 
-use Interop\Container\ContainerInterface;
 use Laminas\Cache\Storage\Adapter\Apcu;
 use Laminas\Cache\Storage\AdapterPluginManager;
 use Laminas\ServiceManager\Factory\InvokableFactory;
+use Psr\Container\ContainerInterface;
 
 use function assert;
 
