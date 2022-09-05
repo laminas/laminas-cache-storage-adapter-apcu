@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-cache.git",
-                "reference": "7e2a29420828762a016c02951f3e8eae81d2fe64"
+                "reference": "9d0c51713684a7bc7891c85decccde0d3b553dec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-cache/zipball/7e2a29420828762a016c02951f3e8eae81d2fe64",
-                "reference": "7e2a29420828762a016c02951f3e8eae81d2fe64",
+                "url": "https://api.github.com/repos/laminas/laminas-cache/zipball/9d0c51713684a7bc7891c85decccde0d3b553dec",
+                "reference": "9d0c51713684a7bc7891c85decccde0d3b553dec",
                 "shasum": ""
             },
             "require": {
@@ -105,7 +105,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2022-09-01T03:52:51+00:00"
+            "time": "2022-09-05T00:24:53+00:00"
         },
         {
             "name": "laminas/laminas-eventmanager",
@@ -1544,16 +1544,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v4.14.0",
+            "version": "v4.15.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "34bea19b6e03d8153165d8f30bba4c3be86184c1"
+                "reference": "0ef6c55a3f47f89d7a374e6f835197a0b5fcf900"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/34bea19b6e03d8153165d8f30bba4c3be86184c1",
-                "reference": "34bea19b6e03d8153165d8f30bba4c3be86184c1",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/0ef6c55a3f47f89d7a374e6f835197a0b5fcf900",
+                "reference": "0ef6c55a3f47f89d7a374e6f835197a0b5fcf900",
                 "shasum": ""
             },
             "require": {
@@ -1594,9 +1594,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nikic/PHP-Parser/issues",
-                "source": "https://github.com/nikic/PHP-Parser/tree/v4.14.0"
+                "source": "https://github.com/nikic/PHP-Parser/tree/v4.15.1"
             },
-            "time": "2022-05-31T20:59:12+00:00"
+            "time": "2022-09-04T07:30:47+00:00"
         },
         {
             "name": "openlss/lib-array2xml",
