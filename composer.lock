@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-cache.git",
-                "reference": "9d0c51713684a7bc7891c85decccde0d3b553dec"
+                "reference": "cf177e32fc1735f07674cb9a4e548fa4f0c158b2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-cache/zipball/9d0c51713684a7bc7891c85decccde0d3b553dec",
-                "reference": "9d0c51713684a7bc7891c85decccde0d3b553dec",
+                "url": "https://api.github.com/repos/laminas/laminas-cache/zipball/cf177e32fc1735f07674cb9a4e548fa4f0c158b2",
+                "reference": "cf177e32fc1735f07674cb9a4e548fa4f0c158b2",
                 "shasum": ""
             },
             "require": {
@@ -105,7 +105,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2022-09-05T00:24:53+00:00"
+            "time": "2022-09-10T04:35:23+00:00"
         },
         {
             "name": "laminas/laminas-eventmanager",
@@ -1322,12 +1322,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-cache-storage-adapter-test.git",
-                "reference": "d46d341b90ee9ba98d58d71231c9ae7957afb53d"
+                "reference": "44b9212bc036df04af4c251507a011411e007640"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-cache-storage-adapter-test/zipball/d46d341b90ee9ba98d58d71231c9ae7957afb53d",
-                "reference": "d46d341b90ee9ba98d58d71231c9ae7957afb53d",
+                "url": "https://api.github.com/repos/laminas/laminas-cache-storage-adapter-test/zipball/44b9212bc036df04af4c251507a011411e007640",
+                "reference": "44b9212bc036df04af4c251507a011411e007640",
                 "shasum": ""
             },
             "require": {
@@ -1374,7 +1374,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2022-08-27T01:32:37+00:00"
+            "time": "2022-09-09T00:19:57+00:00"
         },
         {
             "name": "laminas/laminas-coding-standard",
