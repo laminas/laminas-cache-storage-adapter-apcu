@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laminas\Cache\Storage\Adapter;
 
 use APCUIterator as BaseApcuIterator;
+use Laminas\Cache\Storage\Adapter\Apcu;
 use Laminas\Cache\Storage\IteratorInterface;
 use ReturnTypeWillChange;
 
@@ -15,32 +16,25 @@ final class ApcuIterator implements IteratorInterface
 {
     /**
      * The storage instance
-     *
-     * @var Apcu
      */
-    private $storage;
+    private Apcu $storage;
 
     /**
      * The iterator mode
      *
-     * @var int
      * @psalm-var IteratorInterface::CURRENT_AS_*
      */
-    private $mode = IteratorInterface::CURRENT_AS_KEY;
+    private int $mode = IteratorInterface::CURRENT_AS_KEY;
 
     /**
      * The base APCIterator instance
-     *
-     * @var BaseApcuIterator
      */
-    private $baseIterator;
+    private BaseApcuIterator $baseIterator;
 
     /**
      * The length of the namespace prefix
-     *
-     * @var int
      */
-    private $prefixLength;
+    private int $prefixLength;
 
     public function __construct(Apcu $storage, BaseApcuIterator $baseIterator, string $prefix)
     {
