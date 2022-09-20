@@ -59,7 +59,7 @@ final class Apcu extends AbstractAdapter implements
      *
      * @var null|int|float
      */
-    protected $totalSpace;
+    private $totalSpace;
 
     /**
      * Constructor
@@ -731,7 +731,7 @@ final class Apcu extends AbstractAdapter implements
             );
 
             // update namespace separator on change option
-            $this->getEventManager()->attach('option', function ($event) use ($capabilities, $marker) {
+            $this->getEventManager()->attach('option', static function ($event) use ($capabilities, $marker): void {
                 $params = $event->getParams();
 
                 if (isset($params['namespace_separator'])) {

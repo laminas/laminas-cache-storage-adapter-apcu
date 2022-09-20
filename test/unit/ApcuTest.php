@@ -15,10 +15,8 @@ final class ApcuTest extends AbstractCommonAdapterTest
 {
     /**
      * Restore 'apc.use_request_time'
-     *
-     * @var string
      */
-    protected $iniUseRequestTime;
+    private string $iniUseRequestTime;
 
     public function setUp(): void
     {

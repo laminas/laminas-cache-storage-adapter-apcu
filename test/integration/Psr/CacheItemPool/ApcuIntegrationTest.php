@@ -16,10 +16,8 @@ final class ApcuIntegrationTest extends AbstractCacheItemPoolIntegrationTest
 {
     /**
      * Restore 'apc.use_request_time'
-     *
-     * @var string
      */
-    protected $iniUseRequestTime;
+    private string $iniUseRequestTime;
 
     public function testApcUseRequestTimeThrowsException(): void
     {
