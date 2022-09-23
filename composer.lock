@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "laminas/laminas-cache",
-            "version": "3.6.x-dev",
+            "version": "3.7.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-cache.git",
-                "reference": "3eda7c84a2803ee88ac67b23bb50dbf46871b307"
+                "reference": "ebbceffaecf22a07576d5e1ba8df2940a6a57bf4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-cache/zipball/3eda7c84a2803ee88ac67b23bb50dbf46871b307",
-                "reference": "3eda7c84a2803ee88ac67b23bb50dbf46871b307",
+                "url": "https://api.github.com/repos/laminas/laminas-cache/zipball/ebbceffaecf22a07576d5e1ba8df2940a6a57bf4",
+                "reference": "ebbceffaecf22a07576d5e1ba8df2940a6a57bf4",
                 "shasum": ""
             },
             "require": {
@@ -105,7 +105,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2022-09-14T17:57:53+00:00"
+            "time": "2022-09-22T04:49:11+00:00"
         },
         {
             "name": "laminas/laminas-eventmanager",
@@ -176,16 +176,16 @@
         },
         {
             "name": "laminas/laminas-servicemanager",
-            "version": "3.16.0",
+            "version": "3.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-servicemanager.git",
-                "reference": "863c66733740cd36ebf5e700f4258ef2c68a2a24"
+                "reference": "360be5f16955dd1edbcce1cfaa98ed82a17f02ec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-servicemanager/zipball/863c66733740cd36ebf5e700f4258ef2c68a2a24",
-                "reference": "863c66733740cd36ebf5e700f4258ef2c68a2a24",
+                "url": "https://api.github.com/repos/laminas/laminas-servicemanager/zipball/360be5f16955dd1edbcce1cfaa98ed82a17f02ec",
+                "reference": "360be5f16955dd1edbcce1cfaa98ed82a17f02ec",
                 "shasum": ""
             },
             "require": {
@@ -207,7 +207,7 @@
             },
             "require-dev": {
                 "composer/package-versions-deprecated": "^1.0",
-                "laminas/laminas-coding-standard": "~2.3.0",
+                "laminas/laminas-coding-standard": "~2.4.0",
                 "laminas/laminas-container-config-test": "^0.7",
                 "laminas/laminas-dependency-plugin": "^2.1.2",
                 "mikey179/vfsstream": "^1.6.10@alpha",
@@ -263,7 +263,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2022-07-27T14:58:17+00:00"
+            "time": "2022-09-22T11:33:46+00:00"
         },
         {
             "name": "laminas/laminas-stdlib",
@@ -1322,12 +1322,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-cache-storage-adapter-test.git",
-                "reference": "44b9212bc036df04af4c251507a011411e007640"
+                "reference": "230c3576df588a34d33d45259940f7fb629301e8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-cache-storage-adapter-test/zipball/44b9212bc036df04af4c251507a011411e007640",
-                "reference": "44b9212bc036df04af4c251507a011411e007640",
+                "url": "https://api.github.com/repos/laminas/laminas-cache-storage-adapter-test/zipball/230c3576df588a34d33d45259940f7fb629301e8",
+                "reference": "230c3576df588a34d33d45259940f7fb629301e8",
                 "shasum": ""
             },
             "require": {
@@ -1374,7 +1374,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2022-09-09T00:19:57+00:00"
+            "time": "2022-09-21T01:50:13+00:00"
         },
         {
             "name": "laminas/laminas-coding-standard",
