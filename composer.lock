@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-cache.git",
-                "reference": "24eaccb6725e9d87adc0855d450d1b097d8f2f1a"
+                "reference": "2a01662d80d931a0c19797285c5be083230afe56"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-cache/zipball/24eaccb6725e9d87adc0855d450d1b097d8f2f1a",
-                "reference": "24eaccb6725e9d87adc0855d450d1b097d8f2f1a",
+                "url": "https://api.github.com/repos/laminas/laminas-cache/zipball/2a01662d80d931a0c19797285c5be083230afe56",
+                "reference": "2a01662d80d931a0c19797285c5be083230afe56",
                 "shasum": ""
             },
             "require": {
@@ -105,7 +105,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2022-10-30T03:52:11+00:00"
+            "time": "2022-11-01T03:34:21+00:00"
         },
         {
             "name": "laminas/laminas-eventmanager",
@@ -1326,12 +1326,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-cache-storage-adapter-test.git",
-                "reference": "b8cb483d385b0b710c47ce3682c1da5fa7dee5fa"
+                "reference": "441f2a2de0e8ca981f2c94aeee9c419e915d153d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-cache-storage-adapter-test/zipball/b8cb483d385b0b710c47ce3682c1da5fa7dee5fa",
-                "reference": "b8cb483d385b0b710c47ce3682c1da5fa7dee5fa",
+                "url": "https://api.github.com/repos/laminas/laminas-cache-storage-adapter-test/zipball/441f2a2de0e8ca981f2c94aeee9c419e915d153d",
+                "reference": "441f2a2de0e8ca981f2c94aeee9c419e915d153d",
                 "shasum": ""
             },
             "require": {
@@ -1346,8 +1346,8 @@
                 "laminas/laminas-cache-storage-adapter-apcu": "^2.0",
                 "laminas/laminas-cache-storage-adapter-memory": "^2.0",
                 "laminas/laminas-coding-standard": "~2.4.0",
-                "psalm/plugin-phpunit": "^0.17.0",
-                "vimeo/psalm": "^4.23.0"
+                "psalm/plugin-phpunit": "^0.18.0",
+                "vimeo/psalm": "^4.29.0"
             },
             "default-branch": true,
             "type": "library",
@@ -1378,7 +1378,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2022-10-29T01:26:54+00:00"
+            "time": "2022-11-01T21:31:43+00:00"
         },
         {
             "name": "laminas/laminas-coding-standard",
