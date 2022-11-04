@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-cache.git",
-                "reference": "2a01662d80d931a0c19797285c5be083230afe56"
+                "reference": "a5a0bd91229177bbabe9a804a0c4764e6f799d0e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-cache/zipball/2a01662d80d931a0c19797285c5be083230afe56",
-                "reference": "2a01662d80d931a0c19797285c5be083230afe56",
+                "url": "https://api.github.com/repos/laminas/laminas-cache/zipball/a5a0bd91229177bbabe9a804a0c4764e6f799d0e",
+                "reference": "a5a0bd91229177bbabe9a804a0c4764e6f799d0e",
                 "shasum": ""
             },
             "require": {
@@ -51,7 +51,7 @@
                 "laminas/laminas-serializer": "^2.6.1",
                 "phpbench/phpbench": "^1.0",
                 "phpunit/phpunit": "^9.5.23",
-                "psalm/plugin-phpunit": "^0.17.0",
+                "psalm/plugin-phpunit": "^0.18.0",
                 "vimeo/psalm": "^4.24"
             },
             "suggest": {
@@ -105,7 +105,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2022-11-01T03:34:21+00:00"
+            "time": "2022-11-03T01:52:45+00:00"
         },
         {
             "name": "laminas/laminas-eventmanager",
@@ -821,16 +821,16 @@
         },
         {
             "name": "composer/pcre",
-            "version": "3.0.0",
+            "version": "3.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/pcre.git",
-                "reference": "e300eb6c535192decd27a85bc72a9290f0d6b3bd"
+                "reference": "4482b6409ca6bfc2af043a5711cd21ac3e7a8dfb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/pcre/zipball/e300eb6c535192decd27a85bc72a9290f0d6b3bd",
-                "reference": "e300eb6c535192decd27a85bc72a9290f0d6b3bd",
+                "url": "https://api.github.com/repos/composer/pcre/zipball/4482b6409ca6bfc2af043a5711cd21ac3e7a8dfb",
+                "reference": "4482b6409ca6bfc2af043a5711cd21ac3e7a8dfb",
                 "shasum": ""
             },
             "require": {
@@ -872,7 +872,7 @@
             ],
             "support": {
                 "issues": "https://github.com/composer/pcre/issues",
-                "source": "https://github.com/composer/pcre/tree/3.0.0"
+                "source": "https://github.com/composer/pcre/tree/3.0.2"
             },
             "funding": [
                 {
@@ -888,7 +888,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-02-25T20:21:48+00:00"
+            "time": "2022-11-03T20:24:16+00:00"
         },
         {
             "name": "composer/semver",
@@ -1326,12 +1326,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-cache-storage-adapter-test.git",
-                "reference": "518da7f683d4788e87de92ddb0993e959d15dcbb"
+                "reference": "542339e1b7aab1ddc90bd87206fc313b39efdfeb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-cache-storage-adapter-test/zipball/518da7f683d4788e87de92ddb0993e959d15dcbb",
-                "reference": "518da7f683d4788e87de92ddb0993e959d15dcbb",
+                "url": "https://api.github.com/repos/laminas/laminas-cache-storage-adapter-test/zipball/542339e1b7aab1ddc90bd87206fc313b39efdfeb",
+                "reference": "542339e1b7aab1ddc90bd87206fc313b39efdfeb",
                 "shasum": ""
             },
             "require": {
@@ -1378,7 +1378,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2022-11-02T00:05:48+00:00"
+            "time": "2022-11-03T00:55:04+00:00"
         },
         {
             "name": "laminas/laminas-coding-standard",
@@ -2397,16 +2397,16 @@
         },
         {
             "name": "psalm/plugin-phpunit",
-            "version": "0.18.1",
+            "version": "0.18.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/psalm/psalm-plugin-phpunit.git",
-                "reference": "6d932594bb56cd8c8dad81df2b242ada86b7a892"
+                "reference": "057c1cdf7546c1e427f6fd83b635d0cc18c252bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/psalm/psalm-plugin-phpunit/zipball/6d932594bb56cd8c8dad81df2b242ada86b7a892",
-                "reference": "6d932594bb56cd8c8dad81df2b242ada86b7a892",
+                "url": "https://api.github.com/repos/psalm/psalm-plugin-phpunit/zipball/057c1cdf7546c1e427f6fd83b635d0cc18c252bf",
+                "reference": "057c1cdf7546c1e427f6fd83b635d0cc18c252bf",
                 "shasum": ""
             },
             "require": {
@@ -2451,9 +2451,9 @@
             "description": "Psalm plugin for PHPUnit",
             "support": {
                 "issues": "https://github.com/psalm/psalm-plugin-phpunit/issues",
-                "source": "https://github.com/psalm/psalm-plugin-phpunit/tree/0.18.1"
+                "source": "https://github.com/psalm/psalm-plugin-phpunit/tree/0.18.3"
             },
-            "time": "2022-11-02T17:50:18+00:00"
+            "time": "2022-11-03T18:17:28+00:00"
         },
         {
             "name": "psr/log",
