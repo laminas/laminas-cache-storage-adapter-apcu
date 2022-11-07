@@ -1,7 +1,4 @@
 {
-    "extensions": [
-        "apcu"
-    ],
     "ini": [
         "apc.enable_cli=1"
     ],
