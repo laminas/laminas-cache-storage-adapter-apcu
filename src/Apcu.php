@@ -29,7 +29,6 @@ use function apcu_store;
 use function array_filter;
 use function array_keys;
 use function ceil;
-use function get_class;
 use function gettype;
 use function implode;
 use function ini_get;
@@ -418,7 +417,7 @@ final class Apcu extends AbstractAdapter implements
         $ttl         = (int) ceil($options->getTtl());
 
         if (! apcu_store($internalKey, $value, $ttl)) {
-            $type = is_object($value) ? get_class($value) : gettype($value);
+            $type = is_object($value) ? $value::class : gettype($value);
             throw new Exception\RuntimeException(
                 "apcu_store('{$internalKey}', <{$type}>, {$ttl}) failed"
             );
@@ -482,7 +481,7 @@ final class Apcu extends AbstractAdapter implements
                 return false;
             }
 
-            $type = is_object($value) ? get_class($value) : gettype($value);
+            $type = is_object($value) ? $value::class : gettype($value);
             throw new Exception\RuntimeException(
                 "apcu_add('{$internalKey}', <{$type}>, {$ttl}) failed"
             );
@@ -546,7 +545,7 @@ final class Apcu extends AbstractAdapter implements
         }
 
         if (! apcu_store($internalKey, $value, $ttl)) {
-            $type = is_object($value) ? get_class($value) : gettype($value);
+            $type = is_object($value) ? $value::class : gettype($value);
             throw new Exception\RuntimeException(
                 "apcu_store('{$internalKey}', <{$type}>, {$ttl}) failed"
             );
