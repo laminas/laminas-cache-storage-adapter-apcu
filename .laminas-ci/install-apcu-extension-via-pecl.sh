@@ -8,7 +8,6 @@ if ! [[ "${PHP_VERSION}" =~ 8\.2 ]]; then
 fi
 
 set +e
-apt install make
 
 pecl install --configureoptions 'enable-apcu-debug="no"' apcu
 echo "extension=apcu.so" > /etc/php/${PHP_VERSION}/mods-available/apcu.ini
