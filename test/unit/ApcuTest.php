@@ -11,6 +11,7 @@ use function apcu_clear_cache;
 use function ini_get;
 use function ini_set;
 
+/** @template-extends AbstractCommonAdapterTest<Apcu, ApcuOptions> */
 final class ApcuTest extends AbstractCommonAdapterTest
 {
     /**
