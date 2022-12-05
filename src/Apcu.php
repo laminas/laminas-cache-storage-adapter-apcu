@@ -755,8 +755,7 @@ final class Apcu extends AbstractAdapter implements
      */
     protected function normalizeMetadata(array &$metadata)
     {
-        $apcMetadata = $metadata;
-        $metadata    = [
+        $metadata = [
             'internal_key' => $metadata['key'],
             'atime'        => $metadata['access_time'],
             'ctime'        => $metadata['creation_time'],

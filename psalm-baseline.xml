@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.10.0@916b098b008f6de4543892b1e0651c1c3b92cbfa">
+<files psalm-version="5.0.0@4e177bf0c9f03c17d2fbfd83b7cc9c47605274d8">
   <file src="src/Apcu.php">
     <LessSpecificReturnStatement occurrences="1">
       <code>parent::setOptions($options)</code>
@@ -58,12 +58,14 @@
       <code>$normalizedKey</code>
       <code>$smaInfo['num_seg']</code>
     </MixedOperand>
-    <MixedReturnStatement occurrences="3">
+    <MixedReturnStatement occurrences="4">
       <code>$smaInfo['avail_mem']</code>
       <code>$this-&gt;options</code>
       <code>$this-&gt;totalSpace</code>
+      <code>$this-&gt;totalSpace</code>
     </MixedReturnStatement>
-    <MoreSpecificImplementedParamType occurrences="1">
+    <MoreSpecificImplementedParamType occurrences="2">
+      <code>$options</code>
       <code>$options</code>
     </MoreSpecificImplementedParamType>
     <MoreSpecificReturnType occurrences="1">
@@ -81,6 +83,9 @@
     <UnusedVariable occurrences="1">
       <code>$key</code>
     </UnusedVariable>
+  </file>
+  <file src="src/Apcu/AdapterPluginManagerDelegatorFactory.php">
+    <InvalidArgument occurrences="1"/>
   </file>
   <file src="src/ApcuIterator.php">
     <RedundantCastGivenDocblockType occurrences="1">
