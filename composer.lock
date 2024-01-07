@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "15eec28d65d7833b445dfe943323ef61",
+    "content-hash": "82752de00a141d54e07a85b143749fe7",
     "packages": [
         {
             "name": "laminas/laminas-cache",

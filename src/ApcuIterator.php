@@ -12,6 +12,9 @@ use ReturnTypeWillChange;
 use function strlen;
 use function substr;
 
+/**
+ * @implements IteratorInterface<string,mixed>
+ */
 final class ApcuIterator implements IteratorInterface
 {
     /**

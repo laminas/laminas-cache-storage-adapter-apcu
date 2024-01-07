@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.0.0@4e177bf0c9f03c17d2fbfd83b7cc9c47605274d8">
+<files psalm-version="5.18.0@b113f3ed0259fd6e212d87c3df80eec95a6abf19">
   <file src="src/Apcu.php">
-    <LessSpecificReturnStatement occurrences="1">
-      <code>parent::setOptions($options)</code>
-    </LessSpecificReturnStatement>
-    <MissingClosureParamType occurrences="1">
+    <MissingClosureParamType>
       <code>$event</code>
     </MissingClosureParamType>
-    <MixedArgument occurrences="4">
+    <MixedArgument>
       <code>$metadata</code>
       <code>$metadata</code>
       <code>$normalizedKey</code>
-      <code>$params['namespace_separator']</code>
+      <code><![CDATA[$params['namespace_separator']]]></code>
     </MixedArgument>
-    <MixedArgumentTypeCoercion occurrences="7">
+    <MixedArgumentTypeCoercion>
       <code>$internalKey</code>
       <code>$internalKey</code>
       <code>$key</code>
@@ -22,10 +19,10 @@
       <code>$normalizedKeys</code>
       <code>$normalizedKeys</code>
     </MixedArgumentTypeCoercion>
-    <MixedArrayAccess occurrences="1">
-      <code>$params['namespace_separator']</code>
+    <MixedArrayAccess>
+      <code><![CDATA[$params['namespace_separator']]]></code>
     </MixedArrayAccess>
-    <MixedAssignment occurrences="17">
+    <MixedAssignment>
       <code>$bool</code>
       <code>$casToken</code>
       <code>$internalKeyValuePairs[$internalKey]</code>
@@ -39,61 +36,64 @@
       <code>$params</code>
       <code>$result</code>
       <code>$result[substr($internalKey, $prefixL)]</code>
-      <code>$this-&gt;totalSpace</code>
+      <code><![CDATA[$this->totalSpace]]></code>
       <code>$value</code>
       <code>$value</code>
       <code>$value</code>
     </MixedAssignment>
-    <MixedInferredReturnType occurrences="3">
+    <MixedInferredReturnType>
       <code>ApcuOptions</code>
       <code>int|float</code>
       <code>int|float</code>
     </MixedInferredReturnType>
-    <MixedMethodCall occurrences="1">
+    <MixedMethodCall>
       <code>getParams</code>
     </MixedMethodCall>
-    <MixedOperand occurrences="4">
+    <MixedOperand>
       <code>$normalizedKey</code>
       <code>$normalizedKey</code>
       <code>$normalizedKey</code>
-      <code>$smaInfo['num_seg']</code>
+      <code><![CDATA[$smaInfo['num_seg']]]></code>
     </MixedOperand>
-    <MixedReturnStatement occurrences="4">
-      <code>$smaInfo['avail_mem']</code>
-      <code>$this-&gt;options</code>
-      <code>$this-&gt;totalSpace</code>
-      <code>$this-&gt;totalSpace</code>
+    <MixedReturnStatement>
+      <code><![CDATA[$smaInfo['avail_mem']]]></code>
+      <code><![CDATA[$this->options]]></code>
+      <code><![CDATA[$this->totalSpace]]></code>
+      <code><![CDATA[$this->totalSpace]]></code>
     </MixedReturnStatement>
-    <MoreSpecificImplementedParamType occurrences="2">
+    <MoreSpecificImplementedParamType>
       <code>$options</code>
       <code>$options</code>
     </MoreSpecificImplementedParamType>
-    <MoreSpecificReturnType occurrences="1">
-      <code>Apcu</code>
-    </MoreSpecificReturnType>
-    <PropertyNotSetInConstructor occurrences="1">
+    <PropertyNotSetInConstructor>
       <code>Apcu</code>
     </PropertyNotSetInConstructor>
-    <RedundantCastGivenDocblockType occurrences="4">
+    <RedundantCastGivenDocblockType>
       <code>(int) $value</code>
       <code>(int) $value</code>
       <code>(string) $namespace</code>
       <code>(string) $prefix</code>
     </RedundantCastGivenDocblockType>
-    <UnusedVariable occurrences="1">
+    <UnusedVariable>
       <code>$key</code>
     </UnusedVariable>
   </file>
   <file src="src/Apcu/AdapterPluginManagerDelegatorFactory.php">
-    <InvalidArgument occurrences="1"/>
+    <UnusedParam>
+      <code>$container</code>
+      <code>$name</code>
+    </UnusedParam>
   </file>
   <file src="src/ApcuIterator.php">
-    <RedundantCastGivenDocblockType occurrences="1">
+    <RedundantCastGivenDocblockType>
       <code>(int) $mode</code>
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/ApcuOptions.php">
-    <RedundantCastGivenDocblockType occurrences="1">
+    <PossiblyUnusedMethod>
+      <code>setNamespaceSeparator</code>
+    </PossiblyUnusedMethod>
+    <RedundantCastGivenDocblockType>
       <code>(string) $namespaceSeparator</code>
     </RedundantCastGivenDocblockType>
   </file>

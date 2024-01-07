@@ -45,6 +45,9 @@ use const APC_ITER_VALUE;
 use const APC_LIST_ACTIVE;
 use const PHP_SAPI;
 
+/**
+ * @implements IterableInterface<string, mixed>
+ */
 final class Apcu extends AbstractAdapter implements
     AvailableSpaceCapableInterface,
     ClearByNamespaceInterface,
@@ -84,7 +87,7 @@ final class Apcu extends AbstractAdapter implements
      *
      * @see    getOptions()
      *
-     * @param  array|Traversable|ApcuOptions $options
+     * @param  array<string,mixed>|Traversable<string, mixed>|ApcuOptions $options
      * @return Apcu
      */
     public function setOptions($options)
@@ -93,7 +96,8 @@ final class Apcu extends AbstractAdapter implements
             $options = new ApcuOptions($options);
         }
 
-        return parent::setOptions($options);
+        parent::setOptions($options);
+        return $this;
     }
 
     /**
@@ -238,7 +242,7 @@ final class Apcu extends AbstractAdapter implements
         $result      = apcu_fetch($internalKey, $success);
 
         if (! $success) {
-            return;
+            return null;
         }
 
         $casToken = $result;
