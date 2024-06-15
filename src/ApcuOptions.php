@@ -7,35 +7,18 @@ namespace Laminas\Cache\Storage\Adapter;
 /**
  * These are options specific to the APCu adapter
  */
-class ApcuOptions extends AdapterOptions
+final class ApcuOptions extends AdapterOptions
 {
-    /**
-     * Namespace separator
-     *
-     * @var string
-     */
-    protected $namespaceSeparator = ':';
+    protected string $namespaceSeparator = ':';
 
-    /**
-     * Set namespace separator
-     *
-     * @param  string $namespaceSeparator
-     * @return ApcuOptions Provides a fluent interface
-     */
-    public function setNamespaceSeparator($namespaceSeparator)
+    public function setNamespaceSeparator(string $namespaceSeparator): self
     {
-        $namespaceSeparator = (string) $namespaceSeparator;
         $this->triggerOptionEvent('namespace_separator', $namespaceSeparator);
         $this->namespaceSeparator = $namespaceSeparator;
         return $this;
     }
 
-    /**
-     * Get namespace separator
-     *
-     * @return string
-     */
-    public function getNamespaceSeparator()
+    public function getNamespaceSeparator(): string
     {
         return $this->namespaceSeparator;
     }
