@@ -57,7 +57,7 @@
         },
         {
             "name": "laminas/laminas-cache",
-            "version": "4.0.x-dev",
+            "version": "4.1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-cache.git",
@@ -1407,16 +1407,16 @@
         },
         {
             "name": "laminas/laminas-cache-storage-adapter-test",
-            "version": "3.0.x-dev",
+            "version": "3.1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-cache-storage-adapter-test.git",
-                "reference": "6baccb9466991855ad913150ef9963cd5b3b6e06"
+                "reference": "20f81115336b7de59eddd2932ab04623a8000096"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-cache-storage-adapter-test/zipball/6baccb9466991855ad913150ef9963cd5b3b6e06",
-                "reference": "6baccb9466991855ad913150ef9963cd5b3b6e06",
+                "url": "https://api.github.com/repos/laminas/laminas-cache-storage-adapter-test/zipball/20f81115336b7de59eddd2932ab04623a8000096",
+                "reference": "20f81115336b7de59eddd2932ab04623a8000096",
                 "shasum": ""
             },
             "require": {
@@ -1463,7 +1463,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2024-06-15T20:19:15+00:00"
+            "time": "2024-06-16T17:11:01+00:00"
         },
         {
             "name": "laminas/laminas-coding-standard",
