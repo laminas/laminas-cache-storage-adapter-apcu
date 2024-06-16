@@ -1,100 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.18.0@b113f3ed0259fd6e212d87c3df80eec95a6abf19">
+<files psalm-version="5.24.0@462c80e31c34e58cc4f750c656be3927e80e550e">
   <file src="src/Apcu.php">
-    <MissingClosureParamType>
-      <code>$event</code>
-    </MissingClosureParamType>
-    <MixedArgument>
-      <code>$metadata</code>
-      <code>$metadata</code>
-      <code>$normalizedKey</code>
-      <code><![CDATA[$params['namespace_separator']]]></code>
-    </MixedArgument>
     <MixedArgumentTypeCoercion>
-      <code>$internalKey</code>
-      <code>$internalKey</code>
-      <code>$key</code>
-      <code>$normalizedKeyValuePairs</code>
-      <code>$normalizedKeys</code>
-      <code>$normalizedKeys</code>
-      <code>$normalizedKeys</code>
+      <code><![CDATA[$internalKey]]></code>
+      <code><![CDATA[$internalKey]]></code>
     </MixedArgumentTypeCoercion>
-    <MixedArrayAccess>
-      <code><![CDATA[$params['namespace_separator']]]></code>
-    </MixedArrayAccess>
     <MixedAssignment>
-      <code>$bool</code>
-      <code>$casToken</code>
-      <code>$internalKeyValuePairs[$internalKey]</code>
-      <code>$internalKeyValuePairs[$internalKey]</code>
-      <code>$metadata</code>
-      <code>$metadata</code>
-      <code>$normalizedKey</code>
-      <code>$normalizedKey</code>
-      <code>$normalizedKey</code>
-      <code>$normalizedKey</code>
-      <code>$params</code>
-      <code>$result</code>
-      <code>$result[substr($internalKey, $prefixL)]</code>
-      <code><![CDATA[$this->totalSpace]]></code>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
+      <code><![CDATA[$casToken]]></code>
+      <code><![CDATA[$internalKeyValuePairs[$internalKey]]]></code>
+      <code><![CDATA[$internalKeyValuePairs[$internalKey]]]></code>
+      <code><![CDATA[$result]]></code>
+      <code><![CDATA[$result[substr($internalKey, $prefixL)]]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
     </MixedAssignment>
-    <MixedInferredReturnType>
-      <code>ApcuOptions</code>
-      <code>int|float</code>
-      <code>int|float</code>
-    </MixedInferredReturnType>
-    <MixedMethodCall>
-      <code>getParams</code>
-    </MixedMethodCall>
-    <MixedOperand>
-      <code>$normalizedKey</code>
-      <code>$normalizedKey</code>
-      <code>$normalizedKey</code>
-      <code><![CDATA[$smaInfo['num_seg']]]></code>
-    </MixedOperand>
-    <MixedReturnStatement>
-      <code><![CDATA[$smaInfo['avail_mem']]]></code>
-      <code><![CDATA[$this->options]]></code>
-      <code><![CDATA[$this->totalSpace]]></code>
-      <code><![CDATA[$this->totalSpace]]></code>
-    </MixedReturnStatement>
-    <MoreSpecificImplementedParamType>
-      <code>$options</code>
-      <code>$options</code>
-    </MoreSpecificImplementedParamType>
-    <PropertyNotSetInConstructor>
-      <code>Apcu</code>
-    </PropertyNotSetInConstructor>
-    <RedundantCastGivenDocblockType>
-      <code>(int) $value</code>
-      <code>(int) $value</code>
-      <code>(string) $namespace</code>
-      <code>(string) $prefix</code>
-    </RedundantCastGivenDocblockType>
-    <UnusedVariable>
-      <code>$key</code>
-    </UnusedVariable>
+    <PossiblyUnusedReturnValue>
+      <code><![CDATA[bool]]></code>
+    </PossiblyUnusedReturnValue>
   </file>
   <file src="src/Apcu/AdapterPluginManagerDelegatorFactory.php">
     <UnusedParam>
-      <code>$container</code>
-      <code>$name</code>
+      <code><![CDATA[$container]]></code>
+      <code><![CDATA[$name]]></code>
     </UnusedParam>
   </file>
   <file src="src/ApcuIterator.php">
     <RedundantCastGivenDocblockType>
-      <code>(int) $mode</code>
+      <code><![CDATA[(int) $mode]]></code>
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/ApcuOptions.php">
     <PossiblyUnusedMethod>
-      <code>setNamespaceSeparator</code>
+      <code><![CDATA[setNamespaceSeparator]]></code>
     </PossiblyUnusedMethod>
-    <RedundantCastGivenDocblockType>
-      <code>(string) $namespaceSeparator</code>
-    </RedundantCastGivenDocblockType>
   </file>
 </files>

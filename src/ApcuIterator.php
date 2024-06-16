@@ -7,7 +7,6 @@ namespace Laminas\Cache\Storage\Adapter;
 use APCUIterator as BaseApcuIterator;
 use Laminas\Cache\Storage\Adapter\Apcu;
 use Laminas\Cache\Storage\IteratorInterface;
-use ReturnTypeWillChange;
 
 use function strlen;
 use function substr;
@@ -46,16 +45,16 @@ final class ApcuIterator implements IteratorInterface
         $this->prefixLength = strlen($prefix);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getStorage(): Apcu
     {
         return $this->storage;
     }
 
     /**
-     * Get iterator mode
-     *
-     * @return int Value of IteratorInterface::CURRENT_AS_*
-     * @psalm-return IteratorInterface::CURRENT_AS_*
+     * {@inheritDoc}
      */
     public function getMode(): int
     {
@@ -63,28 +62,18 @@ final class ApcuIterator implements IteratorInterface
     }
 
     /**
-     * Set iterator mode
-     *
-     * @param int $mode
-     * @psalm-suppress MoreSpecificImplementedParamType
-     * @psalm-param IteratorInterface::CURRENT_AS_* $mode
-     * @return ApcuIterator Provides a fluent interface
+     * {@inheritDoc}
      */
-    public function setMode($mode)
+    public function setMode(int $mode): self
     {
         $this->mode = (int) $mode;
         return $this;
     }
 
-    /* Iterator */
-
     /**
-     * Get current key, value or metadata.
-     *
-     * @return mixed
+     * {@inheritDoc}
      */
-    #[ReturnTypeWillChange]
-    public function current()
+    public function current(): mixed
     {
         if ($this->mode === IteratorInterface::CURRENT_AS_SELF) {
             return $this;
@@ -96,13 +85,12 @@ final class ApcuIterator implements IteratorInterface
             return $this->storage->getItem($key);
         }
 
-        if ($this->mode === IteratorInterface::CURRENT_AS_METADATA) {
-            return $this->storage->getMetadata($key);
-        }
-
         return $key;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function key(): string
     {
         $key = $this->baseIterator->key();
@@ -112,7 +100,7 @@ final class ApcuIterator implements IteratorInterface
     }
 
     /**
-     * Move forward to next element
+     * {@inheritDoc}
      */
     public function next(): void
     {
@@ -120,7 +108,7 @@ final class ApcuIterator implements IteratorInterface
     }
 
     /**
-     * Checks if current position is valid
+     * {@inheritDoc}
      */
     public function valid(): bool
     {
@@ -128,7 +116,7 @@ final class ApcuIterator implements IteratorInterface
     }
 
     /**
-     * Rewind the Iterator to the first element.
+     * {@inheritDoc}
      */
     public function rewind(): void
     {

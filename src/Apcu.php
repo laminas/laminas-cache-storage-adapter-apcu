@@ -6,6 +6,8 @@ namespace Laminas\Cache\Storage\Adapter;
 
 use APCUIterator as BaseApcuIterator;
 use Laminas\Cache\Exception;
+use Laminas\Cache\Storage\AbstractMetadataCapableAdapter;
+use Laminas\Cache\Storage\Adapter\Apcu\Metadata;
 use Laminas\Cache\Storage\AvailableSpaceCapableInterface;
 use Laminas\Cache\Storage\Capabilities;
 use Laminas\Cache\Storage\ClearByNamespaceInterface;
@@ -13,22 +15,23 @@ use Laminas\Cache\Storage\ClearByPrefixInterface;
 use Laminas\Cache\Storage\FlushableInterface;
 use Laminas\Cache\Storage\IterableInterface;
 use Laminas\Cache\Storage\TotalSpaceCapableInterface;
-use stdClass;
-use Traversable;
+use Webmozart\Assert\Assert;
 
 use function apcu_add;
 use function apcu_cas;
 use function apcu_clear_cache;
-use function apcu_dec;
 use function apcu_delete;
 use function apcu_exists;
 use function apcu_fetch;
-use function apcu_inc;
 use function apcu_sma_info;
 use function apcu_store;
 use function array_filter;
+use function array_key_exists;
 use function array_keys;
+use function array_map;
+use function assert;
 use function ceil;
+use function get_debug_type;
 use function gettype;
 use function implode;
 use function ini_get;
@@ -46,9 +49,20 @@ use const APC_LIST_ACTIVE;
 use const PHP_SAPI;
 
 /**
+ * @template-extends AbstractMetadataCapableAdapter<ApcuOptions,Metadata>
  * @implements IterableInterface<string, mixed>
+ * @psalm-type APCUMetadataArrayShape = array{
+ *  key: non-empty-string,
+ *  access_time: non-negative-int,
+ *  creation_time: non-negative-int,
+ *  mtime: non-negative-int,
+ *  deletion_time: non-negative-int,
+ *  mem_size: non-negative-int,
+ *  num_hits: non-negative-int,
+ *  ttl: non-negative-int
+ * }
  */
-final class Apcu extends AbstractAdapter implements
+final class Apcu extends AbstractMetadataCapableAdapter implements
     AvailableSpaceCapableInterface,
     ClearByNamespaceInterface,
     ClearByPrefixInterface,
@@ -58,39 +72,28 @@ final class Apcu extends AbstractAdapter implements
 {
     /**
      * Buffered total space in bytes
-     *
-     * @var null|int|float
      */
-    private $totalSpace;
+    private null|int $totalSpace;
 
     /**
-     * Constructor
-     *
-     * @param  null|array|Traversable|ApcuOptions $options
-     * @throws Exception\ExceptionInterface
+     * @param iterable<string,mixed>|ApcuOptions|null $options
      */
-    public function __construct($options = null)
+    public function __construct(iterable|ApcuOptions|null $options = null)
     {
-        if (! ini_get('apc.enabled') || (PHP_SAPI === 'cli' && ! ini_get('apc.enable_cli'))) {
+        if (ini_get('apc.enabled') !== '1' || (PHP_SAPI === 'cli' && ini_get('apc.enable_cli') !== '1')) {
             throw new Exception\ExtensionNotLoadedException(
                 "ext/apcu is disabled - see 'apc.enabled' and 'apc.enable_cli'"
             );
         }
 
         parent::__construct($options);
+        $this->totalSpace = null;
     }
 
-    /* options */
-
     /**
-     * Set options.
-     *
-     * @see    getOptions()
-     *
-     * @param  array<string,mixed>|Traversable<string, mixed>|ApcuOptions $options
-     * @return Apcu
+     * {@inheritDoc}
      */
-    public function setOptions($options)
+    public function setOptions(iterable|AdapterOptions|null $options): self
     {
         if (! $options instanceof ApcuOptions) {
             $options = new ApcuOptions($options);
@@ -101,58 +104,46 @@ final class Apcu extends AbstractAdapter implements
     }
 
     /**
-     * Get options.
-     *
-     * @see    setOptions()
-     *
-     * @return ApcuOptions
+     * {@inheritDoc}
      */
-    public function getOptions()
+    public function getOptions(): ApcuOptions
     {
-        if (! $this->options) {
+        if ($this->options === null) {
             $this->setOptions(new ApcuOptions());
         }
+
+        assert($this->options instanceof ApcuOptions);
         return $this->options;
     }
 
-    /* TotalSpaceCapableInterface */
-
     /**
-     * Get total space in bytes
-     *
-     * @return int|float
+     * {@inheritDoc}
      */
-    public function getTotalSpace()
+    public function getTotalSpace(): int
     {
         if ($this->totalSpace === null) {
-            $smaInfo          = apcu_sma_info(true);
-            $this->totalSpace = $smaInfo['num_seg'] * $smaInfo['seg_size'];
+            $smaInfo = apcu_sma_info(true);
+            $this->assertSmaInfo($smaInfo);
+            $this->totalSpace = (int) ceil($smaInfo['num_seg'] * $smaInfo['seg_size']);
         }
 
         return $this->totalSpace;
     }
 
-    /* AvailableSpaceCapableInterface */
-
     /**
-     * Get available space in bytes
-     *
-     * @return int|float
+     * {@inheritDoc}
      */
-    public function getAvailableSpace()
+    public function getAvailableSpace(): int
     {
         $smaInfo = apcu_sma_info(true);
-        return $smaInfo['avail_mem'];
+        $this->assertSmaInfo($smaInfo);
+        return (int) ceil($smaInfo['avail_mem']);
     }
 
-    /* IterableInterface */
-
     /**
-     * Get the storage iterator
-     *
-     * @return ApcuIterator
+     * {@inheritDoc}
      */
-    public function getIterator(): Traversable
+    public function getIterator(): ApcuIterator
     {
         $options   = $this->getOptions();
         $namespace = $options->getNamespace();
@@ -167,29 +158,22 @@ final class Apcu extends AbstractAdapter implements
         return new ApcuIterator($this, $baseIt, $prefix);
     }
 
-    /* FlushableInterface */
-
     /**
-     * Flush the whole storage
-     *
-     * @return bool
+     * {@inheritDoc}
      */
-    public function flush()
+    public function flush(): bool
     {
         return apcu_clear_cache();
     }
 
-    /* ClearByNamespaceInterface */
-
     /**
-     * Remove items by given namespace
-     *
-     * @param string $namespace
-     * @return bool
+     * {@inheritDoc}
      */
-    public function clearByNamespace($namespace)
+    public function clearByNamespace(string $namespace): bool
     {
-        $namespace = (string) $namespace;
+        /**
+         * @psalm-suppress TypeDoesNotContainType Psalm type does not prevent users from passing empty strings.
+         */
         if ($namespace === '') {
             throw new Exception\InvalidArgumentException('No namespace given');
         }
@@ -200,17 +184,14 @@ final class Apcu extends AbstractAdapter implements
         return apcu_delete(new BaseApcuIterator($pattern, 0, 1, APC_LIST_ACTIVE));
     }
 
-    /* ClearByPrefixInterface */
-
     /**
-     * Remove items matching given prefix
-     *
-     * @param string $prefix
-     * @return bool
+     * {@inheritDoc}
      */
-    public function clearByPrefix($prefix)
+    public function clearByPrefix(string $prefix): bool
     {
-        $prefix = (string) $prefix;
+        /**
+         * @psalm-suppress TypeDoesNotContainType Psalm type does not prevent users from passing empty strings.
+         */
         if ($prefix === '') {
             throw new Exception\InvalidArgumentException('No prefix given');
         }
@@ -225,43 +206,43 @@ final class Apcu extends AbstractAdapter implements
     /* reading */
 
     /**
-     * Internal method to get an item.
-     *
-     * @param  string  $normalizedKey
-     * @param  bool    $success
-     * @param  mixed   $casToken
-     * @return mixed Data on success, null on failure
-     * @throws Exception\ExceptionInterface
+     * {@inheritDoc}
      */
-    protected function internalGetItem(&$normalizedKey, &$success = null, &$casToken = null)
-    {
+    protected function internalGetItem(
+        string $normalizedKey,
+        bool|null &$success = null,
+        mixed &$casToken = null
+    ): mixed {
         $options     = $this->getOptions();
         $namespace   = $options->getNamespace();
         $prefix      = $namespace === '' ? '' : $namespace . $options->getNamespaceSeparator();
         $internalKey = $prefix . $normalizedKey;
-        $result      = apcu_fetch($internalKey, $success);
 
-        if (! $success) {
+        /**
+         * At least for APCu 5.1.23, `apcu_fetch` does not return `false` as `$success` for missing keys
+         * Moving to `apcu_exists` for now.
+         */
+        $success = apcu_exists($internalKey);
+        if ($success === false) {
             return null;
         }
 
+        $result   = apcu_fetch($internalKey);
         $casToken = $result;
         return $result;
     }
 
     /**
-     * Internal method to get multiple items.
-     *
-     * @param  array $normalizedKeys
-     * @return array Associative array of keys and values
-     * @throws Exception\ExceptionInterface
+     * {@inheritDoc}
      */
-    protected function internalGetItems(array &$normalizedKeys)
+    protected function internalGetItems(array $normalizedKeys): array
     {
         $options   = $this->getOptions();
         $namespace = $options->getNamespace();
         if ($namespace === '') {
-            return apcu_fetch($normalizedKeys);
+            $result = apcu_fetch(array_map(fn (string|int $key) => (string) $key, $normalizedKeys));
+            $this->assertValidKeyValuePairs($result);
+            return $result;
         }
 
         $prefix       = $namespace . $options->getNamespaceSeparator();
@@ -279,17 +260,17 @@ final class Apcu extends AbstractAdapter implements
             $result[substr($internalKey, $prefixL)] = $value;
         }
 
+        if ($result !== []) {
+            $this->assertValidKeyValuePairs($result);
+        }
+
         return $result;
     }
 
     /**
-     * Internal method to test if an item exists.
-     *
-     * @param  string $normalizedKey
-     * @return bool
-     * @throws Exception\ExceptionInterface
+     * {@inheritDoc}
      */
-    protected function internalHasItem(&$normalizedKey)
+    protected function internalHasItem(string $normalizedKey): bool
     {
         $options   = $this->getOptions();
         $namespace = $options->getNamespace();
@@ -298,19 +279,24 @@ final class Apcu extends AbstractAdapter implements
     }
 
     /**
-     * Internal method to test multiple items.
-     *
-     * @param  array $normalizedKeys
-     * @return array Array of found keys
-     * @throws Exception\ExceptionInterface
+     * {@inheritDoc}
      */
-    protected function internalHasItems(array &$normalizedKeys)
+    protected function internalHasItems(array $normalizedKeys): array
     {
         $options   = $this->getOptions();
         $namespace = $options->getNamespace();
         if ($namespace === '') {
-            // array_filter with no callback will remove entries equal to FALSE
-            return array_keys(array_filter(apcu_exists($normalizedKeys)));
+            return array_keys(
+                array_filter(
+                    apcu_exists(
+                        array_map(
+                            fn(string|int $key) => (string) $key,
+                            $normalizedKeys
+                        ),
+                    ),
+                    fn(bool $value) => $value === true
+                )
+            );
         }
 
         $prefix       = $namespace . $options->getNamespaceSeparator();
@@ -319,26 +305,26 @@ final class Apcu extends AbstractAdapter implements
             $internalKeys[] = $prefix . $normalizedKey;
         }
 
-        $exists  = apcu_exists($internalKeys);
-        $result  = [];
+        $result       = apcu_exists($internalKeys);
+        $existingKeys = [];
+
         $prefixL = strlen($prefix);
-        foreach ($exists as $internalKey => $bool) {
-            if ($bool === true) {
-                $result[] = substr($internalKey, $prefixL);
+        foreach ($result as $internalKey => $exists) {
+            if ($exists !== true) {
+                continue;
             }
+
+            $existingKeys[] = substr($internalKey, $prefixL);
         }
 
-        return $result;
+        Assert::allStringNotEmpty($existingKeys);
+        return $existingKeys;
     }
 
     /**
-     * Get metadata of an item.
-     *
-     * @param  string $normalizedKey
-     * @return array|bool Metadata on success, false on failure
-     * @throws Exception\ExceptionInterface
+     * {@inheritDoc}
      */
-    protected function internalGetMetadata(&$normalizedKey)
+    protected function internalGetMetadata(string $normalizedKey): Metadata|null
     {
         $options     = $this->getOptions();
         $namespace   = $options->getNamespace();
@@ -350,33 +336,37 @@ final class Apcu extends AbstractAdapter implements
         $it     = new BaseApcuIterator($regexp, $format, 100, APC_LIST_ACTIVE);
 
         if (! $it->valid()) {
-            return false;
+            return null;
         }
 
         $metadata = $it->current();
 
         if (! $metadata) {
-            return false;
+            return null;
         }
 
-        $this->normalizeMetadata($metadata);
-        return $metadata;
+        $this->assertMetadata($metadata);
+
+        return new Metadata(
+            $metadata['key'],
+            $metadata['access_time'],
+            $metadata['creation_time'],
+            $metadata['mtime'],
+            $metadata['deletion_time'],
+            $metadata['mem_size'],
+            $metadata['num_hits'],
+            $metadata['ttl'],
+        );
     }
 
     /**
-     * Get metadata of multiple items
-     *
-     * @param  array $normalizedKeys
-     * @return array Associative array of keys and metadata
-     * @triggers getMetadatas.pre(PreEvent)
-     * @triggers getMetadatas.post(PostEvent)
-     * @triggers getMetadatas.exception(ExceptionEvent)
+     * {@inheritDoc}
      */
-    protected function internalGetMetadatas(array &$normalizedKeys)
+    protected function internalGetMetadatas(array $normalizedKeys): array
     {
         $keysRegExp = [];
         foreach ($normalizedKeys as $normalizedKey) {
-            $keysRegExp[] = preg_quote($normalizedKey, '/');
+            $keysRegExp[] = preg_quote((string) $normalizedKey, '/');
         }
 
         $options   = $this->getOptions();
@@ -395,24 +385,28 @@ final class Apcu extends AbstractAdapter implements
         $it     = new BaseApcuIterator($pattern, $format, 100, APC_LIST_ACTIVE);
         $result = [];
         foreach ($it as $internalKey => $metadata) {
-            $this->normalizeMetadata($metadata);
-            $result[substr($internalKey, $prefixL)] = $metadata;
+            $this->assertMetadata($metadata);
+            $keyWithoutPrefix = substr($internalKey, $prefixL);
+            Assert::stringNotEmpty($keyWithoutPrefix);
+            $result[$keyWithoutPrefix] = new Metadata(
+                $metadata['key'],
+                $metadata['access_time'],
+                $metadata['creation_time'],
+                $metadata['mtime'],
+                $metadata['deletion_time'],
+                $metadata['mem_size'],
+                $metadata['num_hits'],
+                $metadata['ttl'],
+            );
         }
 
         return $result;
     }
 
-    /* writing */
-
     /**
-     * Internal method to store an item.
-     *
-     * @param  string $normalizedKey
-     * @param  mixed  $value
-     * @return bool
-     * @throws Exception\ExceptionInterface
+     * {@inheritDoc}
      */
-    protected function internalSetItem(&$normalizedKey, &$value)
+    protected function internalSetItem(string $normalizedKey, mixed $value): bool
     {
         $options     = $this->getOptions();
         $namespace   = $options->getNamespace();
@@ -431,13 +425,9 @@ final class Apcu extends AbstractAdapter implements
     }
 
     /**
-     * Internal method to store multiple items.
-     *
-     * @param  array $normalizedKeyValuePairs
-     * @return array Array of not stored keys
-     * @throws Exception\ExceptionInterface
+     * {@inheritDoc}
      */
-    protected function internalSetItems(array &$normalizedKeyValuePairs)
+    protected function internalSetItems(array $normalizedKeyValuePairs): array
     {
         $options   = $this->getOptions();
         $namespace = $options->getNamespace();
@@ -455,24 +445,17 @@ final class Apcu extends AbstractAdapter implements
         $failedKeys = apcu_store($internalKeyValuePairs, null, (int) ceil($options->getTtl()));
         $failedKeys = array_keys($failedKeys);
 
-        // remove prefix
         $prefixL = strlen($prefix);
-        foreach ($failedKeys as $key) {
-            $key = substr($key, $prefixL);
-        }
-
+        Assert::allStringNotEmpty($failedKeys);
+        $failedKeys = array_map(fn (string $key): string => substr($key, $prefixL), $failedKeys);
+        Assert::allStringNotEmpty($failedKeys);
         return $failedKeys;
     }
 
     /**
-     * Add an item.
-     *
-     * @param  string $normalizedKey
-     * @param  mixed  $value
-     * @return bool
-     * @throws Exception\ExceptionInterface
+     * {@inheritDoc}
      */
-    protected function internalAddItem(&$normalizedKey, &$value)
+    protected function internalAddItem(string $normalizedKey, mixed $value): bool
     {
         $options     = $this->getOptions();
         $namespace   = $options->getNamespace();
@@ -485,7 +468,7 @@ final class Apcu extends AbstractAdapter implements
                 return false;
             }
 
-            $type = is_object($value) ? $value::class : gettype($value);
+            $type = get_debug_type($value);
             throw new Exception\RuntimeException(
                 "apcu_add('{$internalKey}', <{$type}>, {$ttl}) failed"
             );
@@ -495,18 +478,17 @@ final class Apcu extends AbstractAdapter implements
     }
 
     /**
-     * Internal method to add multiple items.
-     *
-     * @param  array $normalizedKeyValuePairs
-     * @return array Array of not stored keys
-     * @throws Exception\ExceptionInterface
+     * {@inheritDoc}
      */
-    protected function internalAddItems(array &$normalizedKeyValuePairs)
+    protected function internalAddItems(array $normalizedKeyValuePairs): array
     {
         $options   = $this->getOptions();
         $namespace = $options->getNamespace();
         if ($namespace === '') {
-            return array_keys(apcu_add($normalizedKeyValuePairs, null, (int) ceil($options->getTtl())));
+            /** @psalm-suppress InvalidScalarArgument Integer keys are supported by APCu as well. */
+            $result = array_keys(apcu_add($normalizedKeyValuePairs, null, (int) ceil($options->getTtl())));
+            Assert::allStringNotEmpty($result);
+            return $result;
         }
 
         $prefix                = $namespace . $options->getNamespaceSeparator();
@@ -520,23 +502,16 @@ final class Apcu extends AbstractAdapter implements
         $failedKeys = array_keys($failedKeys);
 
         // remove prefix
-        $prefixL = strlen($prefix);
-        foreach ($failedKeys as &$key) {
-            $key = substr($key, $prefixL);
-        }
-
+        $prefixL    = strlen($prefix);
+        $failedKeys = array_map(fn (string $key): string => substr($key, $prefixL), $failedKeys);
+        Assert::allStringNotEmpty($failedKeys);
         return $failedKeys;
     }
 
     /**
-     * Internal method to replace an existing item.
-     *
-     * @param  string $normalizedKey
-     * @param  mixed  $value
-     * @return bool
-     * @throws Exception\ExceptionInterface
+     * {@inheritDoc}
      */
-    protected function internalReplaceItem(&$normalizedKey, &$value)
+    protected function internalReplaceItem(string $normalizedKey, mixed $value): bool
     {
         $options     = $this->getOptions();
         $ttl         = (int) ceil($options->getTtl());
@@ -549,7 +524,8 @@ final class Apcu extends AbstractAdapter implements
         }
 
         if (! apcu_store($internalKey, $value, $ttl)) {
-            $type = is_object($value) ? $value::class : gettype($value);
+            $type = get_debug_type($value);
+
             throw new Exception\RuntimeException(
                 "apcu_store('{$internalKey}', <{$type}>, {$ttl}) failed"
             );
@@ -559,17 +535,9 @@ final class Apcu extends AbstractAdapter implements
     }
 
     /**
-     * Internal method to set an item only if token matches
-     *
-     * @see    getItem()
-     * @see    setItem()
-     *
-     * @param  mixed  $token
-     * @param  string $normalizedKey
-     * @param  mixed  $value
-     * @return bool
+     * {@inheritDoc}
      */
-    protected function internalCheckAndSetItem(&$token, &$normalizedKey, &$value)
+    protected function internalCheckAndSetItem(mixed $token, string $normalizedKey, mixed $value): bool
     {
         if (is_int($token) && is_int($value)) {
             return apcu_cas($normalizedKey, $token, $value);
@@ -579,13 +547,9 @@ final class Apcu extends AbstractAdapter implements
     }
 
     /**
-     * Internal method to remove an item.
-     *
-     * @param  string $normalizedKey
-     * @return bool
-     * @throws Exception\ExceptionInterface
+     * {@inheritDoc}
      */
-    protected function internalRemoveItem(&$normalizedKey)
+    protected function internalRemoveItem(string $normalizedKey): bool
     {
         $options   = $this->getOptions();
         $namespace = $options->getNamespace();
@@ -594,18 +558,16 @@ final class Apcu extends AbstractAdapter implements
     }
 
     /**
-     * Internal method to remove multiple items.
-     *
-     * @param  array $normalizedKeys
-     * @return array Array of not removed keys
-     * @throws Exception\ExceptionInterface
+     * {@inheritDoc}
      */
-    protected function internalRemoveItems(array &$normalizedKeys)
+    protected function internalRemoveItems(array $normalizedKeys): array
     {
         $options   = $this->getOptions();
         $namespace = $options->getNamespace();
         if ($namespace === '') {
-            return apcu_delete($normalizedKeys);
+            $result = apcu_delete(array_map(fn (string|int $key) => (string) $key, $normalizedKeys));
+            Assert::allStringNotEmpty($result);
+            return $result;
         }
 
         $prefix       = $namespace . $options->getNamespaceSeparator();
@@ -617,157 +579,80 @@ final class Apcu extends AbstractAdapter implements
         $failedKeys = apcu_delete($internalKeys);
 
         // remove prefix
-        $prefixL = strlen($prefix);
-        foreach ($failedKeys as &$key) {
-            $key = substr($key, $prefixL);
-        }
-
+        $prefixL    = strlen($prefix);
+        $failedKeys = array_map(fn (string $key): string => substr($key, $prefixL), $failedKeys);
+        Assert::allStringNotEmpty($failedKeys);
         return $failedKeys;
     }
 
     /**
-     * Internal method to increment an item.
-     *
-     * @param  string $normalizedKey
-     * @param  int    $value
-     * @return int|bool The new value on success, false on failure
-     * @throws Exception\ExceptionInterface
+     * {@inheritDoc}
      */
-    protected function internalIncrementItem(&$normalizedKey, &$value)
+    protected function internalGetCapabilities(): Capabilities
     {
-        $options     = $this->getOptions();
-        $namespace   = $options->getNamespace();
-        $prefix      = $namespace === '' ? '' : $namespace . $options->getNamespaceSeparator();
-        $internalKey = $prefix . $normalizedKey;
-        $value       = (int) $value;
-        $newValue    = apcu_inc($internalKey, $value);
-
-        // initial value
-        if ($newValue === false) {
-            $ttl      = (int) ceil($options->getTtl());
-            $newValue = $value;
-            if (! apcu_add($internalKey, $newValue, $ttl)) {
-                throw new Exception\RuntimeException(
-                    "apcu_add('{$internalKey}', {$newValue}, {$ttl}) failed"
-                );
-            }
-        }
-
-        return $newValue;
+        return $this->capabilities ??= new Capabilities(
+            maxKeyLength: 5182,
+            ttlSupported: true,
+            namespaceIsPrefix: true,
+            supportedDataTypes: [
+                'NULL'     => true,
+                'boolean'  => true,
+                'integer'  => true,
+                'double'   => true,
+                'string'   => true,
+                'array'    => true,
+                'object'   => 'object',
+                'resource' => false,
+            ],
+            ttlPrecision: 1,
+            usesRequestTime: (bool) ini_get('apc.use_request_time'),
+        );
     }
 
     /**
-     * Internal method to decrement an item.
-     *
-     * @param  string $normalizedKey
-     * @param  int    $value
-     * @return int|bool The new value on success, false on failure
-     * @throws Exception\ExceptionInterface
+     * @psalm-assert APCUMetadataArrayShape $metadata
      */
-    protected function internalDecrementItem(&$normalizedKey, &$value)
+    private function assertMetadata(mixed $metadata): void
     {
-        $options     = $this->getOptions();
-        $namespace   = $options->getNamespace();
-        $prefix      = $namespace === '' ? '' : $namespace . $options->getNamespaceSeparator();
-        $internalKey = $prefix . $normalizedKey;
-        $value       = (int) $value;
-        $newValue    = apcu_dec($internalKey, $value);
+        Assert::isMap($metadata);
+        Assert::keyExists($metadata, 'key');
+        assert(array_key_exists('key', $metadata), 'Provide existence to psalm.');
+        Assert::keyExists($metadata, 'access_time');
+        assert(array_key_exists('access_time', $metadata), 'Provide existence to psalm.');
+        Assert::keyExists($metadata, 'creation_time');
+        assert(array_key_exists('creation_time', $metadata), 'Provide existence to psalm.');
+        Assert::keyExists($metadata, 'mtime');
+        assert(array_key_exists('mtime', $metadata), 'Provide existence to psalm.');
+        Assert::keyExists($metadata, 'deletion_time');
+        assert(array_key_exists('deletion_time', $metadata), 'Provide existence to psalm.');
+        Assert::keyExists($metadata, 'mem_size');
+        assert(array_key_exists('mem_size', $metadata), 'Provide existence to psalm.');
+        Assert::keyExists($metadata, 'num_hits');
+        assert(array_key_exists('num_hits', $metadata), 'Provide existence to psalm.');
+        Assert::keyExists($metadata, 'ttl');
+        assert(array_key_exists('ttl', $metadata), 'Provide existence to psalm.');
 
-        // initial value
-        if ($newValue === false) {
-            $ttl      = (int) ceil($options->getTtl());
-            $newValue = -$value;
-            if (! apcu_add($internalKey, $newValue, $ttl)) {
-                throw new Exception\RuntimeException(
-                    "apcu_add('{$internalKey}', {$newValue}, {$ttl}) failed"
-                );
-            }
-        }
-
-        return $newValue;
+        Assert::stringNotEmpty($metadata['key']);
+        Assert::natural($metadata['access_time']);
+        Assert::natural($metadata['creation_time']);
+        Assert::natural($metadata['mtime']);
+        Assert::natural($metadata['deletion_time']);
+        Assert::natural($metadata['mem_size']);
+        Assert::natural($metadata['num_hits']);
+        Assert::natural($metadata['ttl']);
     }
 
-    /* status */
-
     /**
-     * Internal method to get capabilities of this adapter
-     *
-     * @return Capabilities
+     * @psalm-assert array{num_seg:int,seg_size:float,avail_mem:float} $smaInfo
      */
-    protected function internalGetCapabilities()
+    private function assertSmaInfo(bool|array $smaInfo): void
     {
-        if ($this->capabilities === null) {
-            $marker       = new stdClass();
-            $capabilities = new Capabilities(
-                $this,
-                $marker,
-                [
-                    'supportedDatatypes' => [
-                        'NULL'     => true,
-                        'boolean'  => true,
-                        'integer'  => true,
-                        'double'   => true,
-                        'string'   => true,
-                        'array'    => true,
-                        'object'   => 'object',
-                        'resource' => false,
-                    ],
-                    'supportedMetadata'  => [
-                        'internal_key',
-                        'atime',
-                        'ctime',
-                        'mtime',
-                        'rtime',
-                        'size',
-                        'hits',
-                        'ttl',
-                    ],
-                    'minTtl'             => 1,
-                    'maxTtl'             => 0,
-                    'staticTtl'          => true,
-                    'ttlPrecision'       => 1,
-                    'useRequestTime'     => (bool) ini_get('apc.use_request_time'),
-                    'maxKeyLength'       => 5182,
-                    'namespaceIsPrefix'  => true,
-                    'namespaceSeparator' => $this->getOptions()->getNamespaceSeparator(),
-                ]
-            );
-
-            // update namespace separator on change option
-            $this->getEventManager()->attach('option', static function ($event) use ($capabilities, $marker): void {
-                $params = $event->getParams();
-
-                if (isset($params['namespace_separator'])) {
-                    $capabilities->setNamespaceSeparator($marker, $params['namespace_separator']);
-                }
-            });
-
-            $this->capabilities     = $capabilities;
-            $this->capabilityMarker = $marker;
-        }
-
-        return $this->capabilities;
-    }
-
-    /* internal */
-
-    /**
-     * Normalize metadata to work with APC
-     *
-     * @param  array $metadata
-     * @return void
-     */
-    protected function normalizeMetadata(array &$metadata)
-    {
-        $metadata = [
-            'internal_key' => $metadata['key'],
-            'atime'        => $metadata['access_time'],
-            'ctime'        => $metadata['creation_time'],
-            'mtime'        => $metadata['mtime'],
-            'rtime'        => $metadata['deletion_time'],
-            'size'         => $metadata['mem_size'],
-            'hits'         => $metadata['num_hits'],
-            'ttl'          => $metadata['ttl'],
-        ];
+        Assert::isMap($smaInfo);
+        Assert::keyExists($smaInfo, 'num_seg');
+        Assert::integer($smaInfo['num_seg']);
+        Assert::keyExists($smaInfo, 'seg_size');
+        Assert::float($smaInfo['seg_size']);
+        Assert::keyExists($smaInfo, 'avail_mem');
+        Assert::float($smaInfo['avail_mem']);
     }
 }

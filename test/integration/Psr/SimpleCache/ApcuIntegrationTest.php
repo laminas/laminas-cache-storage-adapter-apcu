@@ -13,12 +13,7 @@ use function ini_set;
 
 class ApcuIntegrationTest extends AbstractSimpleCacheIntegrationTest
 {
-    /**
-     * Restore 'apc.use_request_time'
-     *
-     * @var string
-     */
-    protected $iniUseRequestTime;
+    protected string $iniUseRequestTime;
 
     protected function setUp(): void
     {

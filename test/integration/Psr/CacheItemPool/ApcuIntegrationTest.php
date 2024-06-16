@@ -14,9 +14,6 @@ use function ini_set;
 
 final class ApcuIntegrationTest extends AbstractCacheItemPoolIntegrationTest
 {
-    /**
-     * Restore 'apc.use_request_time'
-     */
     private string $iniUseRequestTime;
 
     public function testApcUseRequestTimeThrowsException(): void
