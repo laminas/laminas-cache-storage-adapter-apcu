@@ -61,12 +61,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-cache.git",
-                "reference": "dd614a35eeb4170fb96b3b9adbaf29141332b8c5"
+                "reference": "c4027b098437582867943509a3ba1f8458d4979d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-cache/zipball/dd614a35eeb4170fb96b3b9adbaf29141332b8c5",
-                "reference": "dd614a35eeb4170fb96b3b9adbaf29141332b8c5",
+                "url": "https://api.github.com/repos/laminas/laminas-cache/zipball/c4027b098437582867943509a3ba1f8458d4979d",
+                "reference": "c4027b098437582867943509a3ba1f8458d4979d",
                 "shasum": ""
             },
             "require": {
@@ -147,7 +147,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2024-09-24T06:18:22+00:00"
+            "time": "2024-10-08T03:10:43+00:00"
         },
         {
             "name": "laminas/laminas-eventmanager",
@@ -2290,16 +2290,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "10.5.35",
+            "version": "10.5.36",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "7ac8b4e63f456046dcb4c9787da9382831a1874b"
+                "reference": "aa0a8ce701ea7ee314b0dfaa8970dc94f3f8c870"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/7ac8b4e63f456046dcb4c9787da9382831a1874b",
-                "reference": "7ac8b4e63f456046dcb4c9787da9382831a1874b",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/aa0a8ce701ea7ee314b0dfaa8970dc94f3f8c870",
+                "reference": "aa0a8ce701ea7ee314b0dfaa8970dc94f3f8c870",
                 "shasum": ""
             },
             "require": {
@@ -2371,7 +2371,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/10.5.35"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/10.5.36"
             },
             "funding": [
                 {
@@ -2387,7 +2387,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-09-19T10:52:21+00:00"
+            "time": "2024-10-08T15:36:51+00:00"
         },
         {
             "name": "psalm/plugin-phpunit",
@@ -4566,7 +4566,7 @@
         "php": "~8.1.0 || ~8.2.0 || ~8.3.0",
         "ext-apcu": "^5.1.10"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "platform-overrides": {
         "php": "8.1.99"
     },
