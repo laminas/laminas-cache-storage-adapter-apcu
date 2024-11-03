@@ -32,11 +32,9 @@ use function array_map;
 use function assert;
 use function ceil;
 use function get_debug_type;
-use function gettype;
 use function implode;
 use function ini_get;
 use function is_int;
-use function is_object;
 use function preg_quote;
 use function strlen;
 use function substr;
@@ -415,7 +413,7 @@ final class Apcu extends AbstractMetadataCapableAdapter implements
         $ttl         = (int) ceil($options->getTtl());
 
         if (! apcu_store($internalKey, $value, $ttl)) {
-            $type = is_object($value) ? $value::class : gettype($value);
+            $type = get_debug_type($value);
             throw new Exception\RuntimeException(
                 "apcu_store('{$internalKey}', <{$type}>, {$ttl}) failed"
             );
