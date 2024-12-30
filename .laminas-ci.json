@@ -2,5 +2,8 @@
     "ini": [
         "apc.enable_cli=1"
     ],
-    "backwardCompatibilityCheck": true
+    "backwardCompatibilityCheck": true,
+    "ignore_php_platform_requirements": {
+        "8.4": true
+    }
 }
