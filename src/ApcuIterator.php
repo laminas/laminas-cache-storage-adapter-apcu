@@ -17,11 +17,6 @@ use function substr;
 final class ApcuIterator implements IteratorInterface
 {
     /**
-     * The storage instance
-     */
-    private Apcu $storage;
-
-    /**
      * The iterator mode
      *
      * @psalm-var IteratorInterface::CURRENT_AS_*
@@ -29,19 +24,21 @@ final class ApcuIterator implements IteratorInterface
     private int $mode = IteratorInterface::CURRENT_AS_KEY;
 
     /**
-     * The base APCIterator instance
-     */
-    private BaseApcuIterator $baseIterator;
-
-    /**
      * The length of the namespace prefix
      */
-    private int $prefixLength;
+    private readonly int $prefixLength;
 
-    public function __construct(Apcu $storage, BaseApcuIterator $baseIterator, string $prefix)
-    {
-        $this->storage      = $storage;
-        $this->baseIterator = $baseIterator;
+    public function __construct(
+        /**
+         * The storage instance
+         */
+        private readonly Apcu $storage,
+        /**
+         * The base APCIterator instance
+         */
+        private readonly BaseApcuIterator $baseIterator,
+        string $prefix
+    ) {
         $this->prefixLength = strlen($prefix);
     }
 
