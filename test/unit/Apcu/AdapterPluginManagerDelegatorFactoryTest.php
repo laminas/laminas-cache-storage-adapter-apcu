@@ -12,7 +12,7 @@ final class AdapterPluginManagerDelegatorFactoryTest extends TestCase
 {
     use PluginManagerDelegatorFactoryTestTrait;
 
-    public function getCommonAdapterNamesProvider(): iterable
+    public static function getCommonAdapterNamesProvider(): iterable
     {
         return [
             'lowercase'                        => ['apcu'],

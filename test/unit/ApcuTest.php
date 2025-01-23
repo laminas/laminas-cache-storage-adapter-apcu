@@ -7,9 +7,9 @@ namespace LaminasTest\Cache\Storage\Adapter;
 use Laminas\Cache\Storage\Adapter\Apcu;
 use Laminas\Cache\Storage\Adapter\ApcuOptions;
 
-use function apcu_clear_cache;
 use function ini_get;
 use function ini_set;
+use function sprintf;
 
 /** @template-extends AbstractCommonAdapterTest<Apcu, ApcuOptions> */
 final class ApcuTest extends AbstractCommonAdapterTest
@@ -25,16 +25,29 @@ final class ApcuTest extends AbstractCommonAdapterTest
         $this->iniUseRequestTime = (string) ini_get('apc.use_request_time');
         ini_set('apc.use_request_time', '0');
 
-        $this->options = new ApcuOptions();
-        $this->storage = new Apcu();
-        $this->storage->setOptions($this->options);
+        $this->options = new ApcuOptions(['namespace' => '']);
+        $this->storage = new Apcu($this->options);
+        $this->storage->flush();
 
         parent::setUp();
     }
 
+    public function testGetMetadata(): void
+    {
+        $options = $this->storage->getOptions();
+        $options->setNamespace('prefix');
+        $this->storage->setItem('foo', 'bar');
+        $metadata = $this->storage->getMetadata('foo');
+        self::assertNotNull($metadata);
+        self::assertSame(
+            sprintf('%s%sfoo', $options->getNamespace(), $options->getNamespaceSeparator()),
+            $metadata->internalKey,
+        );
+    }
+
     public function tearDown(): void
     {
-        apcu_clear_cache();
+        $this->storage->flush();
 
         // reset ini configurations
         ini_set('apc.use_request_time', $this->iniUseRequestTime);
