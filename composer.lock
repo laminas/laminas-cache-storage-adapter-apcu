@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "40a78a5b3223cafc66f07926d6e86243",
+    "content-hash": "4902af2b0040bab66cb63e00ba262645",
     "packages": [
         {
             "name": "brick/varexporter",
@@ -61,12 +61,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-cache.git",
-                "reference": "bffe8749112623aec09ac14058c3ebd91116d6b2"
+                "reference": "f9c1749ca21d9f36e39764b7374b5e6d08758845"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-cache/zipball/bffe8749112623aec09ac14058c3ebd91116d6b2",
-                "reference": "bffe8749112623aec09ac14058c3ebd91116d6b2",
+                "url": "https://api.github.com/repos/laminas/laminas-cache/zipball/f9c1749ca21d9f36e39764b7374b5e6d08758845",
+                "reference": "f9c1749ca21d9f36e39764b7374b5e6d08758845",
                 "shasum": ""
             },
             "require": {
@@ -147,7 +147,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2024-11-27T14:27:59+00:00"
+            "time": "2025-01-21T00:48:25+00:00"
         },
         {
             "name": "laminas/laminas-eventmanager",
@@ -4625,7 +4625,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "~8.1.0 || ~8.2.0 || ~8.3.0 ||~8.4.0",
+        "php": "~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0",
         "ext-apcu": "^5.1.10"
     },
     "platform-dev": {},
