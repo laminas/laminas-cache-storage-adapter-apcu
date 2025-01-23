@@ -1,58 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.18.0@b113f3ed0259fd6e212d87c3df80eec95a6abf19">
+<files psalm-version="5.26.1@d747f6500b38ac4f7dfc5edbcae6e4b637d7add0">
   <file src="src/Apcu.php">
     <MissingClosureParamType>
-      <code>$event</code>
+      <code><![CDATA[$event]]></code>
     </MissingClosureParamType>
     <MixedArgument>
-      <code>$metadata</code>
-      <code>$metadata</code>
-      <code>$normalizedKey</code>
+      <code><![CDATA[$metadata]]></code>
+      <code><![CDATA[$metadata]]></code>
+      <code><![CDATA[$normalizedKey]]></code>
       <code><![CDATA[$params['namespace_separator']]]></code>
     </MixedArgument>
     <MixedArgumentTypeCoercion>
-      <code>$internalKey</code>
-      <code>$internalKey</code>
-      <code>$key</code>
-      <code>$normalizedKeyValuePairs</code>
-      <code>$normalizedKeys</code>
-      <code>$normalizedKeys</code>
-      <code>$normalizedKeys</code>
+      <code><![CDATA[$internalKey]]></code>
+      <code><![CDATA[$internalKey]]></code>
+      <code><![CDATA[$key]]></code>
+      <code><![CDATA[$normalizedKeyValuePairs]]></code>
+      <code><![CDATA[$normalizedKeys]]></code>
+      <code><![CDATA[$normalizedKeys]]></code>
+      <code><![CDATA[$normalizedKeys]]></code>
     </MixedArgumentTypeCoercion>
     <MixedArrayAccess>
       <code><![CDATA[$params['namespace_separator']]]></code>
     </MixedArrayAccess>
     <MixedAssignment>
-      <code>$bool</code>
-      <code>$casToken</code>
-      <code>$internalKeyValuePairs[$internalKey]</code>
-      <code>$internalKeyValuePairs[$internalKey]</code>
-      <code>$metadata</code>
-      <code>$metadata</code>
-      <code>$normalizedKey</code>
-      <code>$normalizedKey</code>
-      <code>$normalizedKey</code>
-      <code>$normalizedKey</code>
-      <code>$params</code>
-      <code>$result</code>
-      <code>$result[substr($internalKey, $prefixL)]</code>
+      <code><![CDATA[$bool]]></code>
+      <code><![CDATA[$casToken]]></code>
+      <code><![CDATA[$internalKeyValuePairs[$internalKey]]]></code>
+      <code><![CDATA[$internalKeyValuePairs[$internalKey]]]></code>
+      <code><![CDATA[$metadata]]></code>
+      <code><![CDATA[$metadata]]></code>
+      <code><![CDATA[$normalizedKey]]></code>
+      <code><![CDATA[$normalizedKey]]></code>
+      <code><![CDATA[$normalizedKey]]></code>
+      <code><![CDATA[$normalizedKey]]></code>
+      <code><![CDATA[$params]]></code>
+      <code><![CDATA[$result]]></code>
+      <code><![CDATA[$result[substr($internalKey, $prefixL)]]]></code>
       <code><![CDATA[$this->totalSpace]]></code>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
     </MixedAssignment>
     <MixedInferredReturnType>
-      <code>ApcuOptions</code>
-      <code>int|float</code>
-      <code>int|float</code>
+      <code><![CDATA[ApcuOptions]]></code>
+      <code><![CDATA[int|float]]></code>
+      <code><![CDATA[int|float]]></code>
     </MixedInferredReturnType>
     <MixedMethodCall>
-      <code>getParams</code>
+      <code><![CDATA[getParams]]></code>
     </MixedMethodCall>
     <MixedOperand>
-      <code>$normalizedKey</code>
-      <code>$normalizedKey</code>
-      <code>$normalizedKey</code>
+      <code><![CDATA[$normalizedKey]]></code>
+      <code><![CDATA[$normalizedKey]]></code>
+      <code><![CDATA[$normalizedKey]]></code>
       <code><![CDATA[$smaInfo['num_seg']]]></code>
     </MixedOperand>
     <MixedReturnStatement>
@@ -62,39 +62,43 @@
       <code><![CDATA[$this->totalSpace]]></code>
     </MixedReturnStatement>
     <MoreSpecificImplementedParamType>
-      <code>$options</code>
-      <code>$options</code>
+      <code><![CDATA[$options]]></code>
+      <code><![CDATA[$options]]></code>
     </MoreSpecificImplementedParamType>
     <PropertyNotSetInConstructor>
-      <code>Apcu</code>
+      <code><![CDATA[Apcu]]></code>
     </PropertyNotSetInConstructor>
     <RedundantCastGivenDocblockType>
-      <code>(int) $value</code>
-      <code>(int) $value</code>
-      <code>(string) $namespace</code>
-      <code>(string) $prefix</code>
+      <code><![CDATA[(int) $value]]></code>
+      <code><![CDATA[(int) $value]]></code>
+      <code><![CDATA[(string) $namespace]]></code>
+      <code><![CDATA[(string) $prefix]]></code>
     </RedundantCastGivenDocblockType>
+    <RiskyTruthyFalsyComparison>
+      <code><![CDATA[! ini_get('apc.enable_cli')]]></code>
+      <code><![CDATA[! ini_get('apc.enabled')]]></code>
+    </RiskyTruthyFalsyComparison>
     <UnusedVariable>
-      <code>$key</code>
+      <code><![CDATA[$key]]></code>
     </UnusedVariable>
   </file>
   <file src="src/Apcu/AdapterPluginManagerDelegatorFactory.php">
     <UnusedParam>
-      <code>$container</code>
-      <code>$name</code>
+      <code><![CDATA[$container]]></code>
+      <code><![CDATA[$name]]></code>
     </UnusedParam>
   </file>
   <file src="src/ApcuIterator.php">
     <RedundantCastGivenDocblockType>
-      <code>(int) $mode</code>
+      <code><![CDATA[(int) $mode]]></code>
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/ApcuOptions.php">
     <PossiblyUnusedMethod>
-      <code>setNamespaceSeparator</code>
+      <code><![CDATA[setNamespaceSeparator]]></code>
     </PossiblyUnusedMethod>
     <RedundantCastGivenDocblockType>
-      <code>(string) $namespaceSeparator</code>
+      <code><![CDATA[(string) $namespaceSeparator]]></code>
     </RedundantCastGivenDocblockType>
   </file>
 </files>
