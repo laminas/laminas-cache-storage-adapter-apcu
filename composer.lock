@@ -1500,7 +1500,6 @@
                 "vimeo/psalm": "^5.15.0",
                 "webmozart/assert": "^1.11"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
