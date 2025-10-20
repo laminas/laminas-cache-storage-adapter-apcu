@@ -61,12 +61,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-cache.git",
-                "reference": "969a664de32938c08a2c7a0181f47c6eef38155c"
+                "reference": "4195c35f1c4ad3d01ddbd1eb238be127cb119635"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-cache/zipball/969a664de32938c08a2c7a0181f47c6eef38155c",
-                "reference": "969a664de32938c08a2c7a0181f47c6eef38155c",
+                "url": "https://api.github.com/repos/laminas/laminas-cache/zipball/4195c35f1c4ad3d01ddbd1eb238be127cb119635",
+                "reference": "4195c35f1c4ad3d01ddbd1eb238be127cb119635",
                 "shasum": ""
             },
             "require": {
@@ -147,7 +147,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2025-08-26T06:50:36+00:00"
+            "time": "2025-10-14T22:38:36+00:00"
         },
         {
             "name": "laminas/laminas-eventmanager",
