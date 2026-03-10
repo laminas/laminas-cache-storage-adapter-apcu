@@ -6,6 +6,7 @@ namespace LaminasTest\Cache\Storage\Adapter\Psr\CacheItemPool;
 
 use Laminas\Cache\Psr\CacheItemPool\CacheException;
 use Laminas\Cache\Storage\Adapter\Apcu;
+use Laminas\Cache\Storage\FlushableInterface;
 use Laminas\Cache\Storage\StorageInterface;
 use LaminasTest\Cache\Storage\Adapter\AbstractCacheItemPoolIntegrationTest;
 
@@ -40,7 +41,7 @@ final class ApcuIntegrationTest extends AbstractCacheItemPoolIntegrationTest
         parent::tearDown();
     }
 
-    protected function createStorage(): StorageInterface
+    protected function createStorage(): StorageInterface&FlushableInterface
     {
         return new Apcu();
     }
