@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.26.1@d747f6500b38ac4f7dfc5edbcae6e4b637d7add0">
+<files psalm-version="6.15.1@28dc127af1b5aecd52314f6f645bafc10d0e11f9">
   <file src="src/Apcu.php">
-    <MixedArgumentTypeCoercion>
+    <InvalidOperand>
+      <code><![CDATA[$smaInfo['num_seg'] * $smaInfo['seg_size']]]></code>
+    </InvalidOperand>
+    <MixedArgument>
       <code><![CDATA[$internalKey]]></code>
+    </MixedArgument>
+    <MixedArgumentTypeCoercion>
       <code><![CDATA[$internalKey]]></code>
     </MixedArgumentTypeCoercion>
     <MixedAssignment>
       <code><![CDATA[$casToken]]></code>
+      <code><![CDATA[$internalKey]]></code>
       <code><![CDATA[$internalKeyValuePairs[$internalKey]]]></code>
       <code><![CDATA[$internalKeyValuePairs[$internalKey]]]></code>
       <code><![CDATA[$result]]></code>
@@ -15,9 +21,16 @@
       <code><![CDATA[$value]]></code>
       <code><![CDATA[$value]]></code>
     </MixedAssignment>
+    <PossiblyFalseIterator>
+      <code><![CDATA[$fetch]]></code>
+    </PossiblyFalseIterator>
     <PossiblyUnusedReturnValue>
       <code><![CDATA[bool]]></code>
     </PossiblyUnusedReturnValue>
+    <RedundantCondition>
+      <code><![CDATA[$result !== []]]></code>
+      <code><![CDATA[$result !== []]]></code>
+    </RedundantCondition>
   </file>
   <file src="src/Apcu/AdapterPluginManagerDelegatorFactory.php">
     <UnusedParam>
@@ -34,5 +47,59 @@
     <PossiblyUnusedMethod>
       <code><![CDATA[setNamespaceSeparator]]></code>
     </PossiblyUnusedMethod>
+  </file>
+  <file src="test/integration/Psr/CacheItemPool/ApcuIntegrationTest.php">
+    <InvalidReturnStatement>
+      <code><![CDATA[new Apcu()]]></code>
+    </InvalidReturnStatement>
+    <InvalidReturnType>
+      <code><![CDATA[StorageInterface&FlushableInterface]]></code>
+    </InvalidReturnType>
+    <MissingTemplateParam>
+      <code><![CDATA[ApcuIntegrationTest]]></code>
+    </MissingTemplateParam>
+    <PossiblyFalsePropertyAssignmentValue>
+      <code><![CDATA[ini_get('apc.use_request_time')]]></code>
+    </PossiblyFalsePropertyAssignmentValue>
+  </file>
+  <file src="test/integration/Psr/SimpleCache/ApcuIntegrationTest.php">
+    <ClassMustBeFinal>
+      <code><![CDATA[ApcuIntegrationTest]]></code>
+    </ClassMustBeFinal>
+    <PossiblyFalsePropertyAssignmentValue>
+      <code><![CDATA[ini_get('apc.use_request_time')]]></code>
+    </PossiblyFalsePropertyAssignmentValue>
+  </file>
+  <file src="test/unit/ApcuTest.php">
+    <InvalidPropertyAssignmentValue>
+      <code><![CDATA[new Apcu($this->options)]]></code>
+      <code><![CDATA[new ApcuOptions(['namespace' => ''])]]></code>
+    </InvalidPropertyAssignmentValue>
+    <InvalidTemplateParam>
+      <code><![CDATA[ApcuTest]]></code>
+      <code><![CDATA[ApcuTest]]></code>
+    </InvalidTemplateParam>
+    <MixedArgument>
+      <code><![CDATA[$options->getNamespace()]]></code>
+      <code><![CDATA[$options->getNamespaceSeparator()]]></code>
+    </MixedArgument>
+    <MixedAssignment>
+      <code><![CDATA[$metadata]]></code>
+      <code><![CDATA[$options]]></code>
+    </MixedAssignment>
+    <MixedMethodCall>
+      <code><![CDATA[getNamespace]]></code>
+      <code><![CDATA[getNamespaceSeparator]]></code>
+      <code><![CDATA[setNamespace]]></code>
+    </MixedMethodCall>
+    <MixedPropertyFetch>
+      <code><![CDATA[$metadata->internalKey]]></code>
+    </MixedPropertyFetch>
+    <UndefinedMethod>
+      <code><![CDATA[flush]]></code>
+      <code><![CDATA[getMetadata]]></code>
+      <code><![CDATA[getOptions]]></code>
+      <code><![CDATA[setItem]]></code>
+    </UndefinedMethod>
   </file>
 </files>
